@@ -1,9 +1,7 @@
 package com.vgb;
 
 // A representation of a material in the invoice subsystem. 
-public class Material extends Item {
-	private static final double PURCHASE_TAX = 0.0715;
-	
+public class Material extends Item {	
 	private String unit;
 	private int costPerUnit;
 	
@@ -15,7 +13,10 @@ public class Material extends Item {
 	}
 	
 	public double purchase(int amount) {
-		return (double) costPerUnit * amount * PURCHASE_TAX;
+		double PURCHASE_TAX = 0.0715;
+
+		double roundedPreTaxCost = Round.toCents((double) costPerUnit * amount);
+		return roundedPreTaxCost + Round.toCents(roundedPreTaxCost * PURCHASE_TAX);
 	}
 
 	@Override
