@@ -1,0 +1,36 @@
+[
+ {
+   "uuid": "93dd96fe-2f8d-4e04-8f37-c62cd1ef42a9",
+   "type": "M",
+   "name": "concrete",
+   "unit": "lbs",
+   "costPerUnit": 2
+ },
+ {
+   "uuid": "c56ca62a-e2ec-4fd1-9d0f-b93a0d894c42",
+   "type": "C",
+   "name": "tiling",
+   "subcontractorUuid": "dc94e6f3-ef25-4ca9-8c42-50a72170d51b",
+ },
+ {
+   "uuid": "7e286690-ca7e-4372-bc50-719bc69e8c72",
+   "type": "E",
+   "name": "shovel",
+   "modelNumber": "MODELNO",
+   "price": 25
+ },
+ {
+   "uuid": "a29c8741-de3b-45f2-8571-ec10c1eb8877",
+   "type": "E",
+   "name": "jackhammer",
+   "modelNumber": "XXXC1",
+   "price": 650
+ },
+ {
+   "uuid": "6c71c2f4-9918-477e-8ef6-b82fc4cdca1d",
+   "type": "M",
+   "name": "m&ms",
+   "unit": "one bag",
+   "costPerUnit": 5
+ }
+]

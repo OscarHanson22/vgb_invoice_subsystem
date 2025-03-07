@@ -1,0 +1,57 @@
+<list>
+  <company>
+    <uuid>4c141f07-3e8c-4d77-abc4-3e2058fb7e30</uuid>
+    <contactUuid>c4147f3a-029c-4c8e-8710-3b29a02019d3</contactUuid>
+    <name>Company A</name>
+    <address>
+      <street>1111 A Street</street>
+      <city>A City</city>
+      <state>NE</state>
+      <zip>68848</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>b6677ab8-f204-41ec-a297-406b89dd56b6</uuid>
+    <contactUuid>17a2a995-6555-46e2-8630-bfd3d8765d78</contactUuid>
+    <name>Company B</name>
+    <address>
+      <street>2222 B Ave</street>
+      <city>B City</city>
+      <state>VE</state>
+      <zip>77889</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>85f7ab31-8118-4100-8d08-2e154da6e734</uuid>
+    <contactUuid>365ecbd2-ed99-4cd6-8d63-d9da8c9caa89</contactUuid>
+    <name>Company C</name>
+    <address>
+      <street>3333 C Lane</street>
+      <city>C City</city>
+      <state>WI</state>
+      <zip>12345</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>aeb3835b-e365-46f1-84cc-a7dffb67bb86</uuid>
+    <contactUuid>ef1e65c3-38c4-49ba-b25d-d6696e1918b4</contactUuid>
+    <name>Company D</name>
+    <address>
+      <street>4444 D Trail</street>
+      <city>D City</city>
+      <state>CA</state>
+      <zip>99900</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>dc94e6f3-ef25-4ca9-8c42-50a72170d51b</uuid>
+    <contactUuid>ee444afd-39d1-4ed6-b611-7f5a8db842f8</contactUuid>
+    <name>Company E</name>
+    <address>
+      <street>5555 E Boulevard</street>
+      <city>E City</city>
+      <state>TX</state>
+      <zip>09876</zip>
+    </address>
+  </company>
+</list>
