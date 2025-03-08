@@ -3,7 +3,15 @@ package com.vgb.tests;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
+
+import com.vgb.Contract;
+import com.vgb.Equipment;
+import com.vgb.Invoice;
+import com.vgb.Material;
 
 /**
  * JUnit test suite for VGB invoice system.
@@ -11,7 +19,6 @@ import org.junit.jupiter.api.Test;
 public class InvoiceTests {
 
 	public static final double TOLERANCE = 0.001;
-
 
 	/**
 	 * Tests the subtotal, tax total and grand total values of an invoice in
@@ -25,24 +32,43 @@ public class InvoiceTests {
 		//2. Create an instance of your invoice and add these 3 items to it
 		//3. Calculate and compare the values to the expected values.
 		//data values
-
-		double expectedSubtotal = 0;
-		double expectedTaxTotal = 0;
-		double expectedGrandTotal = 0;
+		
+		String uuid = UUID.randomUUID().toString();
+		String customerUuid = UUID.randomUUID().toString();
+		String salespersonUuid = UUID.randomUUID().toString();
+		String date = "2024-07-23";
+		
+		Invoice invoice = new Invoice(uuid, customerUuid, salespersonUuid, date);
+		
+		Equipment equipment = new Equipment(UUID.randomUUID().toString(), "Backhoe 3000", "BH30X2", 95125);
+		
+		LocalDate startDate = LocalDate.parse("2024-01-01");
+		LocalDate endDate = LocalDate.parse("2026-06-01");
+		
+		invoice.addItem(equipment.purchase_cost(), equipment.purchase_tax());
+		invoice.addItem(equipment.lease_cost(startDate, endDate), equipment.lease_tax(startDate, endDate));
+		invoice.addItem(equipment.rent_cost(25), equipment.rent_tax(25));
+					
+		double expectedSubtotal = 95125.00 + 69037.29 + 2378.13;
+		double expectedTaxTotal = 4994.06 + 1500.00 + 104.16;
+		double expectedGrandTotal = 173138.64;
 
 		//Call your invoice's methods to get these values
-		double actualSubtotal = 0;
-		double actualTaxTotal = 0;
-		double actualGrandTotal = 0;
+		double actualSubtotal = invoice.subtotal();
+		double actualTaxTotal = invoice.taxTotal();
+		double actualGrandTotal = invoice.grandTotal();
 
-		//Use assertEquals with the TOLERANCE to compare:
 		assertEquals(expectedSubtotal, actualSubtotal, TOLERANCE);
 		assertEquals(expectedTaxTotal, actualTaxTotal, TOLERANCE);
 		assertEquals(expectedGrandTotal, actualGrandTotal, TOLERANCE);
+		
+		String s = invoice.toString();
+		
 		// ensure that the string representation contains necessary elements
-		assertTrue(s.contains("TODO"));
-
-
+		assertTrue(s.contains(uuid));
+		assertTrue(s.contains(customerUuid));
+		assertTrue(s.contains(salespersonUuid));
+		assertTrue(s.contains(date));
 	}
 
 	/**
@@ -55,6 +81,18 @@ public class InvoiceTests {
 		//   You may reuse the instances from your Entity test suites
 		//2. Create an instance of your invoice and add these 2 items to it
 		//3. Calculate and compare the values to the expected values.
+		
+		String uuid = UUID.randomUUID().toString();
+		String customerUuid = UUID.randomUUID().toString();
+		String salespersonUuid = UUID.randomUUID().toString();
+		String date = "2024-07-23";
+		
+		Invoice invoice = new Invoice(uuid, customerUuid, salespersonUuid, date);
+		
+		Material material = new Material(UUID.randomUUID().toString(), "Nails", "Box", 9.99);
+		Contract contract = new Contract(UUID.randomUUID().toString(), "Contract A", UUID.randomUUID().toString());
+		
+		invoice.addItem(material.);
 	}
 
 
