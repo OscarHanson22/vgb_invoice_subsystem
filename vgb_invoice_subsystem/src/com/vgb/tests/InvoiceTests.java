@@ -26,13 +26,6 @@ public class InvoiceTests {
 	 */
 	@Test
 	public void testInvoice01() {
-
-		//1. Create test instances 3 different types of invoice items
-		//   You may reuse the instances from your Entity test suites
-		//2. Create an instance of your invoice and add these 3 items to it
-		//3. Calculate and compare the values to the expected values.
-		//data values
-		
 		String uuid = UUID.randomUUID().toString();
 		String customerUuid = UUID.randomUUID().toString();
 		String salespersonUuid = UUID.randomUUID().toString();
@@ -53,7 +46,6 @@ public class InvoiceTests {
 		double expectedTaxTotal = 4994.06 + 1500.00 + 104.16;
 		double expectedGrandTotal = 173138.64;
 
-		//Call your invoice's methods to get these values
 		double actualSubtotal = invoice.subtotal();
 		double actualTaxTotal = invoice.taxTotal();
 		double actualGrandTotal = invoice.grandTotal();
@@ -64,7 +56,6 @@ public class InvoiceTests {
 		
 		String s = invoice.toString();
 		
-		// ensure that the string representation contains necessary elements
 		assertTrue(s.contains(uuid));
 		assertTrue(s.contains(customerUuid));
 		assertTrue(s.contains(salespersonUuid));
@@ -77,11 +68,6 @@ public class InvoiceTests {
 	 */
 	@Test
 	public void testInvoice02() {
-		//1. Create test instances the other 2 types of invoice items
-		//   You may reuse the instances from your Entity test suites
-		//2. Create an instance of your invoice and add these 2 items to it
-		//3. Calculate and compare the values to the expected values.
-		
 		String uuid = UUID.randomUUID().toString();
 		String customerUuid = UUID.randomUUID().toString();
 		String salespersonUuid = UUID.randomUUID().toString();
@@ -92,7 +78,27 @@ public class InvoiceTests {
 		Material material = new Material(UUID.randomUUID().toString(), "Nails", "Box", 9.99);
 		Contract contract = new Contract(UUID.randomUUID().toString(), "Contract A", UUID.randomUUID().toString());
 		
-		invoice.addItem(material.);
+		invoice.addItem(material.purchase_cost(31), material.purchase_tax(31));
+		invoice.addItem(10500.00, 0.00); // the contract
+		
+		double expectedSubtotal = 309.69 + 10500.00;
+		double expectedTaxTotal = 22.14;
+		double expectedGrandTotal = 10831.83;
+
+		double actualSubtotal = invoice.subtotal();
+		double actualTaxTotal = invoice.taxTotal();
+		double actualGrandTotal = invoice.grandTotal();
+		
+		assertEquals(expectedSubtotal, actualSubtotal, TOLERANCE);
+		assertEquals(expectedTaxTotal, actualTaxTotal, TOLERANCE);
+		assertEquals(expectedGrandTotal, actualGrandTotal, TOLERANCE);
+		
+		String s = invoice.toString();
+		
+		assertTrue(s.contains(uuid));
+		assertTrue(s.contains(customerUuid));
+		assertTrue(s.contains(salespersonUuid));
+		assertTrue(s.contains(date));
 	}
 
 

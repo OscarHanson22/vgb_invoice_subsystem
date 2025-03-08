@@ -12,7 +12,7 @@ public class Material extends Item {
 		this.costPerUnit = costPerUnit;
 	}
 	
-	public double purchase_total(int amount) {
+	public double purchase(int amount) {
 		return purchase_cost(amount) + purchase_tax(amount);
 	}
 	
