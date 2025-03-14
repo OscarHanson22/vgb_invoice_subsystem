@@ -1,5 +1,6 @@
 package com.vgb;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.vgb.financial_handlers.Total;
@@ -7,27 +8,27 @@ import com.vgb.financial_handlers.Total;
 // A representation of an invoice in the invoicing subsystem.
 public class Invoice {
 	private UUID uuid;
-	private UUID customerUuid;
-	private UUID salespersonUuid;
+	private Person customer;
+	private Person salesperson;
 	private String date;
 	private Total total;
+	private ArrayList<Item> items;
 	
 	// Creates a new invoice with the specified information.
-	public Invoice(UUID uuid, UUID customerUuid, UUID salespersonUuid, String date) {
+	public Invoice(UUID uuid, Person customer, Person salesperson, String date) {
 		this.uuid = uuid;
-		this.customerUuid = customerUuid;
-		this.salespersonUuid = salespersonUuid;
+		this.customer = customer;
+		this.salesperson = salesperson;
 		this.date = date;
 		this.total = Total.empty();
-	}
-	
-	public UUID getUuid() {
-		return uuid;
+		this.items = new ArrayList<>();
+		
 	}
 	
 	// Adds an item's total to the invoice. 
-	public void addItem(Total total) {
-		this.total.add(total);
+	public void addItem(Item item) {
+		items.add(item);
+		total.add(item.getTotal());
 	}
 	
 	// Returns the subtotal of the invoice. 
@@ -47,6 +48,6 @@ public class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoice [uuid=" + uuid + ", customerUuid=" + customerUuid + ", salespersonUuid=" + salespersonUuid + ", date=" + date + "]";
+		return "Invoice [uuid=" + uuid + ", customer=" + customer + ", salesperson=" + salesperson + ", date=" + date + "]";
 	}
 }

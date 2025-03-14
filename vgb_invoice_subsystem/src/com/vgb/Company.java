@@ -4,7 +4,6 @@ import java.util.UUID;
 
 // A representation of a company in the invoice subsystem. 
 public class Company extends Identifiable {
-	private UUID uuid;
 	private Person contact;
 	private String name;
 	private Address address;
@@ -16,14 +15,21 @@ public class Company extends Identifiable {
 		this.name = name;
 		this.address = address;
 	}
-	
-	
-	public UUID getUuid() {
-		return uuid;
+
+	public Person getContact() {
+		return contact;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Address getAddress() {
+		return address;
 	}
 
 	@Override
 	public String toString() {
-		return "Company [uuid=" + uuid + ", contactUuid=" + contactUuid + "name=" + name + ", address=" + address + "]";
+		return "Company [uuid=" + this.getUuid() + ", contact=" + contact.toString() + "name=" + name + ", address=" + address + "]";
 	}
 }

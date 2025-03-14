@@ -20,6 +20,22 @@ public class Person extends Identifiable {
 		this.emailAddresses = new ArrayList<>(emailAddresses);
 	}
 
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public ArrayList<String> getEmailAddresses() {
+		return emailAddresses;
+	}
+
 	@Override
 	public String toString() {
 		return "Person [uuid=" + this.getUuid() + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailAddresses=" + emailAddresses + "]";

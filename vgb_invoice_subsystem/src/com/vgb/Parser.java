@@ -168,28 +168,23 @@ public abstract class Parser {
 			UUID itemUuid = UUID.fromString(splitLine[1]);
 						
 			Item item = fromItems.get(itemUuid);
-			
-			Total total = Total.empty();
-			
+						
 			if (item.getClass() == Equipment.class) {
 				Equipment equipment = (Equipment) item;
 				String parseIdentifier = splitLine[2];
 				
 				switch (parseIdentifier) {
 					case "P":
-						Purchaser equipmentPurchaser = new Purchaser(0.0525);
-						total = equipmentPurchaser.total(equipment.getRetailPrice(), 1);
+						item = equipment;
 						break;
 					case "R":
 						int hours = Integer.parseInt(splitLine[3]);
-						Renter equipmentRenter = new Renter(0.0438, 0.001);
-						total = equipmentRenter.total(equipment.getRetailPrice(), hours);
+						item = new EquipmentRental(equipment, hours);
 						break;
 					case "L":
 						LocalDate startDate = LocalDate.parse(splitLine[3]);
 						LocalDate endDate = LocalDate.parse(splitLine[3]);
-						Leaser equipmentLeaser = new Leaser(0.5);
-						total = equipmentLeaser.total(equipment.getRetailPrice(), startDate, endDate);
+						item = new EquipmentLease(equipment, startDate, endDate);
 						break;
 					default: 
 						System.err.println("Found unknown parse identifier: \"" + parseIdentifier + "\".");
@@ -198,16 +193,15 @@ public abstract class Parser {
 			} else if (item.getClass() == Material.class) {
 				Material material = (Material) item;
 				int amount = Integer.parseInt(splitLine[2]);
-				Purchaser materialPurchaser = new Purchaser(0.0715);
-				total = materialPurchaser.total(material.getCostPerUnit(), amount);				
+				item = new Material(material, amount);				
 			} else if (item.getClass() == Contract.class) {
+				Contract contract = (Contract) item;
 				int contractAmount = Integer.parseInt(splitLine[2]);
-				Purchaser contractPurchaser = new Purchaser(0.0);
-				total = contractPurchaser.total(contractAmount, 1);
+				item = new Contract(contract, contractAmount);
 			}
 			
 			Invoice invoice = addToInvoices.get(invoiceUuid);
-			invoice.addItem(total);
+			invoice.addItem(item);
 		}
 		
 		
