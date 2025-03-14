@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import com.vgb.financial_handlers.Leaser;
-import com.vgb.financial_handlers.Purchaser;
-import com.vgb.financial_handlers.Renter;
+import com.vgb.financial_handlers.*;
 
 // A file-system interface that provides methods for writing to and from files. 
 public abstract class Parser {
@@ -30,7 +28,7 @@ public abstract class Parser {
 	}
 	
 	// Splits a string up into lines (\n, \n\r, \r\n, \r etc.)
-	public static String[] lines_of(String string) {
+	public static String[] linesOf(String string) {
 		return string.split("\\R+"); 
 	}
 	
@@ -90,8 +88,8 @@ public abstract class Parser {
 			String state = splitLine[5];
 			String zip = splitLine[6];
 			
-			Address company_address = new Address(street, city, state, zip);
-			Company company = new Company(uuid, contactUuid, name, company_address);
+			Address companyAddress = new Address(street, city, state, zip);
+			Company company = new Company(uuid, contactUuid, name, companyAddress);
 						
 			companies.add(company);
 		}
@@ -144,7 +142,7 @@ public abstract class Parser {
 				
 		HashMap<UUID, Invoice> invoices = new HashMap<>(); 
 		
-		for (String line : lines_of(InvoicesCsvString)) {
+		for (String line : linesOf(InvoicesCsvString)) {
 			String[] splitLine = line.split(",");
 						
 			UUID uuid = UUID.fromString(splitLine[0]);
@@ -160,20 +158,18 @@ public abstract class Parser {
 		return invoices;
 	}
 	
-	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> add_to_invoices, HashMap<UUID, Item> from_items) {
+	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> addToInvoices, HashMap<UUID, Item> fromItems) {
 		String invoiceItemsCsvString = readFileToString(fromFile);
 						
-		for (String line : lines_of(invoiceItemsCsvString)) {
+		for (String line : linesOf(invoiceItemsCsvString)) {
 			String[] splitLine = line.split(",");
 						
 			UUID invoiceUuid = UUID.fromString(splitLine[0]);
 			UUID itemUuid = UUID.fromString(splitLine[1]);
 						
-			Invoice invoice = add_to_invoices.get(invoiceUuid);
-			Item item = from_items.get(itemUuid);
+			Item item = fromItems.get(itemUuid);
 			
-			double cost = 0.0;
-			double tax = 0.0;
+			Total total = Total.empty();
 			
 			if (item.getClass() == Equipment.class) {
 				Equipment equipment = (Equipment) item;
@@ -182,21 +178,18 @@ public abstract class Parser {
 				switch (parseIdentifier) {
 					case "P":
 						Purchaser equipmentPurchaser = new Purchaser(0.0525);
-						cost = equipmentPurchaser.cost(equipment.getRetailPrice(), 1);
-						tax = equipmentPurchaser.tax(equipment.getRetailPrice(), 1);
+						total = equipmentPurchaser.total(equipment.getRetailPrice(), 1);
 						break;
 					case "R":
 						int hours = Integer.parseInt(splitLine[3]);
 						Renter equipmentRenter = new Renter(0.0438, 0.001);
-						cost = equipmentRenter.cost(equipment.getRetailPrice(), hours);
-						tax = equipmentRenter.tax(equipment.getRetailPrice(), hours);
+						total = equipmentRenter.total(equipment.getRetailPrice(), hours);
 						break;
 					case "L":
 						LocalDate startDate = LocalDate.parse(splitLine[3]);
 						LocalDate endDate = LocalDate.parse(splitLine[3]);
 						Leaser equipmentLeaser = new Leaser(0.5);
-						cost = equipmentLeaser.cost(equipment.getRetailPrice(), startDate, endDate);
-						tax = equipmentLeaser.tax(equipment.getRetailPrice(), startDate, endDate);
+						total = equipmentLeaser.total(equipment.getRetailPrice(), startDate, endDate);
 						break;
 					default: 
 						System.err.println("Found unknown parse identifier: \"" + parseIdentifier + "\".");
@@ -206,16 +199,28 @@ public abstract class Parser {
 				Material material = (Material) item;
 				int amount = Integer.parseInt(splitLine[2]);
 				Purchaser materialPurchaser = new Purchaser(0.0715);
-				cost = materialPurchaser.cost(material.getCostPerUnit(), amount);
-				tax = materialPurchaser.cost(material.getCostPerUnit(), amount);
-				
+				total = materialPurchaser.total(material.getCostPerUnit(), amount);				
 			} else if (item.getClass() == Contract.class) {
-				
+				int contractAmount = Integer.parseInt(splitLine[2]);
+				Purchaser contractPurchaser = new Purchaser(0.0);
+				total = contractPurchaser.total(contractAmount, 1);
 			}
+			
+			Invoice invoice = addToInvoices.get(invoiceUuid);
+			invoice.addItem(total);
 		}
 		
+		
 		ArrayList<Invoice> invoices = new ArrayList<>(); 
+
+		for (Invoice invoice : addToInvoices.values()) {
+			invoices.add(invoice);
+		}
 		
 		return invoices;
 	}
+	
+//	public static void main(String[] args) {
+//		
+//	}
 }

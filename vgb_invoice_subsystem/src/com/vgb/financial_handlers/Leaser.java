@@ -14,31 +14,23 @@ public class Leaser {
 	public Leaser(double markup) {
 		this.markup = markup;
 	}
-	
-	// Returns the raw cost (without tax) of leasing something with the specified information. 
-	public double cost(double price, LocalDate startDate, LocalDate endDate) {		
+
+	// Returns a total (which includes raw cost and tax amounts) given the price and amount of hours of renting something.
+	public Total total(double price, LocalDate startDate, LocalDate endDate) {
 		int leaseDurationInDays = (int) ChronoUnit.DAYS.between(startDate, endDate) + 1; // the `endDate` is treated as exclusive
 		double leaseDurationInYears = (double) leaseDurationInDays / 365;
 		double fiveYearAmortization = leaseDurationInYears / 5.0;
-				
-		return Round.toCents(fiveYearAmortization * price * (1.0 + markup));
-	}
-	
-	// Returns the tax cost of leasing something with the specified information. 
-	public double tax(double price, LocalDate startDate, LocalDate endDate) {
-		double leaseAmount = cost(price, startDate, endDate);
+		double cost = Round.toCents(fiveYearAmortization * price * (1.0 + markup));
 		
-		if (leaseAmount < 5000.00) {
-			return 0.0;
-		} else if (leaseAmount < 12500.00) {
-			return 500.0;
+		double tax = 0.0;
+		if (cost < 5000.00) {
+			tax = 0.0;
+		} else if (cost < 12500.00) {
+			tax = 500.0;
 		} else {
-			return 1500.0;
+			tax = 1500.0;
 		}	
-	}
-	
-	// Returns the total cost of leasing something. 
-	public double total(double price, LocalDate startDate, LocalDate endDate) {
-		return cost(price, startDate, endDate) + tax(price, startDate, endDate);
+		
+		return new Total(cost, tax);
 	}
 }

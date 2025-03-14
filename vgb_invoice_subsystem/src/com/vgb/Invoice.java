@@ -2,14 +2,15 @@ package com.vgb;
 
 import java.util.UUID;
 
+import com.vgb.financial_handlers.Total;
+
 // A representation of an invoice in the invoicing subsystem.
 public class Invoice {
 	private UUID uuid;
 	private UUID customerUuid;
 	private UUID salespersonUuid;
 	private String date;
-	private double taxTotal;
-	private double subtotal;
+	private Total total;
 	
 	// Creates a new invoice with the specified information.
 	public Invoice(UUID uuid, UUID customerUuid, UUID salespersonUuid, String date) {
@@ -17,33 +18,31 @@ public class Invoice {
 		this.customerUuid = customerUuid;
 		this.salespersonUuid = salespersonUuid;
 		this.date = date;
-		this.taxTotal = 0.0;
-		this.subtotal = 0.0;
+		this.total = Total.empty();
 	}
 	
 	public UUID getUuid() {
 		return uuid;
 	}
 	
-	// Adds an item to the invoice. 
-	public void addItem(double total, double tax) {
-		subtotal += total;
-		taxTotal += tax;
+	// Adds an item's total to the invoice. 
+	public void addItem(Total total) {
+		this.total.add(total);
 	}
 	
 	// Returns the subtotal of the invoice. 
 	public double subtotal() {
-		return subtotal;
+		return total.getCost();
 	}
 	
 	// Returns the total amount of tax of the invoice. 
 	public double taxTotal() {
-		return taxTotal;
+		return total.getTax();
 	}
 	
 	// Returns the grand total (subtotal and total tax) of the invoice. 
 	public double grandTotal() {
-		return subtotal + taxTotal;
+		return total.getTotal();
 	}
 
 	@Override

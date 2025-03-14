@@ -1,5 +1,8 @@
 package com.vgb.financial_handlers;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 /*
  * A class that handles the renting of "something."
  */
@@ -13,18 +16,10 @@ public class Renter {
 		this.chargeRate = charge_rate;
 	}
 	
-	// Returns the raw cost (without tax) of renting something with the specified information. 
-	public double cost(double price, int hours) {
-		return Round.toCents(price * chargeRate * hours);
-	}
-
-	// Returns the tax cost of renting something with the specified information. 
-	public double tax(double price, int hours) {
-		return Round.toCents(cost(price, hours) * taxRate);
-	}
-	
-	// Returns the total cost of renting something with the specified information. 
-	public double total(double price, int hours) {
-		return cost(price, hours) + tax(price, hours);
+	// Returns a total (which includes raw cost and tax amounts) given the price and amount of hours of renting something.
+	public Total total(double price, int hours) {
+		double cost = Round.toCents(price * chargeRate * hours);
+		double tax = Round.toCents(cost * taxRate);	
+		return new Total(cost, tax);
 	}
 }
