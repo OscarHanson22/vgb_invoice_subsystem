@@ -228,7 +228,6 @@ public abstract class Parser {
 			invoice.addItem(item);
 		}
 		
-		
 		ArrayList<Invoice> invoices = new ArrayList<>(); 
 
 		for (Invoice invoice : addToInvoices.values()) {
@@ -237,8 +236,4 @@ public abstract class Parser {
 		
 		return invoices;
 	}
-	
-//	public static void main(String[] args) {
-//		
-//	}
 }

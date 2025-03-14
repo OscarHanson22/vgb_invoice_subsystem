@@ -3,7 +3,6 @@ package com.vgb;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class InvoiceSubsystem {
 	private HashMap<UUID, Person> people;
@@ -11,27 +10,14 @@ public class InvoiceSubsystem {
 	private HashMap<UUID, Item> items;
 	private HashMap<UUID, Invoice> invoices;
 		
-	public InvoiceSubsystem(List<Person> people, List<Company> companies, List<Item> items, List<Invoice> invoices) {
-		this.people = new HashMap<>();
-		for (Person person : people) {
-			this.people.put(person.getUuid(), person);
-		}
-		
-		this.companies = new HashMap<>();
-		for (Company company : companies) {
-			this.companies.put(company.getUuid(), company);
-		}
-		
-		this.items = new HashMap<>();
-		for (Item item : items) {
-			this.items.put(item.getUuid(), item);
-		}
-		
-		this.invoices = new HashMap<>();
-		for (Invoice invoice : invoices) {
-			this.invoices.put(invoice.getUuid(), invoice);
-		}
+	public InvoiceSubsystem(String peopleFilePath, String companiesFilePath, String itemsFilePath, String invoicesFilePath) {
+		people = Parser.parsePeople(peopleFilePath);
+		companies = Parser.parseCompanies(companiesFilePath, people);
+		items = Parser.parseItems(itemsFilePath, companies);
+		invoices = Parser.parseInvoices(invoicesFilePath, people);
 	}
 	
-	
+	public List<Invoice> addInvoiceItems(String invoiceItemsFilePath) {
+		return Parser.parseInvoiceItems(invoiceItemsFilePath, invoices, items);
+	}
 }
