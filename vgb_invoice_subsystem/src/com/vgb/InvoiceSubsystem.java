@@ -21,14 +21,14 @@ public class InvoiceSubsystem {
 		return Parser.parseInvoiceItems(invoiceItemsFilePath, invoices, items);
 	}
 	
-	public void debug() {
-		System.out.println(people);
-		System.out.println(companies);
-		System.out.println(items);
-		for (Invoice invoice : invoices.values()) {
-			System.out.println(invoice);		
-		}
-	}
+//	public void debug() {
+//		System.out.println(people);
+//		System.out.println(companies);
+//		System.out.println(items);
+//		for (Invoice invoice : invoices.values()) {
+//			System.out.println(invoice);		
+//		}
+//	}
 	
 	public static void main(String[] args) {		
 		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/PersonsTest.csv", "data/CompaniesTest.csv", "data/ItemsTest.csv", "data/InvoicesTest.csv");
