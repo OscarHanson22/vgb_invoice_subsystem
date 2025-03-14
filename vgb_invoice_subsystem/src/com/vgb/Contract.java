@@ -1,11 +1,13 @@
 package com.vgb;
 
+import java.util.UUID;
+
 // Represents a contract with another company. 
 public class Contract extends Item {
-	private String companyUuid;
+	private UUID companyUuid;
 
 	// Creates and returns a Contract with the specified information. 
-	public Contract(String uuid, String name, String companyUuid) {
+	public Contract(UUID uuid, String name, UUID companyUuid) {
 		super(uuid, name);
 		this.companyUuid = companyUuid;
 	}
