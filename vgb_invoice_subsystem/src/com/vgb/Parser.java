@@ -183,6 +183,10 @@ public abstract class Parser {
 			UUID itemUuid = UUID.fromString(splitLine[1]);
 						
 			Item item = withItems.get(itemUuid);
+			if (item == null) {
+				System.err.println("Item with UUID: \"" + itemUuid + "\" not found in `withItems`.");
+				System.exit(1);
+			}
 						
 			if (item.getClass() == Equipment.class) {
 				Equipment equipment = (Equipment) item;
@@ -216,6 +220,11 @@ public abstract class Parser {
 			}
 			
 			Invoice invoice = addToInvoices.get(invoiceUuid);
+			if (invoice == null) {
+				System.err.println("Invoice with UUID: \"" + invoiceUuid + "\" not found in `addToInvoices`.");
+				System.exit(1);
+			}
+			
 			invoice.addItem(item);
 		}
 		
