@@ -9,8 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import com.vgb.financial_handlers.*;
-
 // A file-system interface that provides methods for writing to and from files. 
 public abstract class Parser {
 	// Reads the contents of `fileName` into a string and returns it. 
@@ -44,15 +42,13 @@ public abstract class Parser {
 	
 	// Parses a list of Person objects from a given file `fromFile`. 
 	// `fromFile` is expected to be a .csv file that is properly formatted.
-	public static List<Person> parsePeople(String fromFile) {
+	public static HashMap<UUID, Person> parsePeople(String fromFile) {
 		String personsCsvString = readFileToString(fromFile);
-				
-		String[] lines = personsCsvString.split("\\R+"); // splits on new-line combinations (\n, \n\r, \r\n, \r etc.)
+						
+		HashMap<UUID, Person> persons = new HashMap<>(); 
 		
-		ArrayList<Person> persons = new ArrayList<>(); 
-		
-		for (int i = 1; i < lines.length; i++) {
-			String[] splitLine = lines[i].split(",");
+		for (String line : linesOf(personsCsvString)) {
+			String[] splitLine = line.split(",");
 			
 			UUID uuid = UUID.fromString(splitLine[0]);
 			String firstName = splitLine[1];
@@ -62,7 +58,7 @@ public abstract class Parser {
 
 			Person person = new Person(uuid, firstName, lastName, phoneNumber, emailAddresses);
 						
-			persons.add(person);
+			persons.put(uuid, person);
 		}
 		
 		return persons;
@@ -70,28 +66,32 @@ public abstract class Parser {
 	
 	// Parses a list of Company objects from a given file `fromFile`. 
 	// `fromFile` is expected to be a .csv file that is properly formatted.
-	public static List<Company> parseCompanies(String fromFile) {
+	public static HashMap<UUID, Company> parseCompanies(String fromFile, HashMap<UUID, Person> withPeople) {
 		String companiesCsvString = readFileToString(fromFile);
-				
-		String[] lines = companiesCsvString.split("\\R+"); // splits on new-line combinations (\n, \n\r, \r\n, \r etc.)
+						
+		HashMap<UUID, Company> companies = new HashMap<>(); 
 		
-		ArrayList<Company> companies = new ArrayList<>(); 
-		
-		for (int i = 1; i < lines.length; i++) {
-			String[] splitLine = lines[i].split(",");
+		for (String line : linesOf(companiesCsvString)) {
+			String[] splitLine = line.split(",");
 						
 			UUID uuid = UUID.fromString(splitLine[0]);
-			String contactUuid = splitLine[1];
+			UUID contactUuid = UUID.fromString(splitLine[1]);
 			String name = splitLine[2];
 			String street = splitLine[3];
 			String city = splitLine[4];
 			String state = splitLine[5];
 			String zip = splitLine[6];
 			
+			Person contact = withPeople.get(contactUuid);
+			if (contact == null) {
+				System.err.println("Contact with UUID: \"" + contact + "\" not found in `withPeople`.");
+				System.exit(1);
+			}
+			
 			Address companyAddress = new Address(street, city, state, zip);
-			Company company = new Company(uuid, contactUuid, name, companyAddress);
+			Company company = new Company(uuid, contact, name, companyAddress);
 						
-			companies.add(company);
+			companies.put(uuid, company);
 		}
 		
 		return companies;
@@ -99,15 +99,13 @@ public abstract class Parser {
 	
 	// Parses a list of Item objects from a given file `fromFile`. 
 	// `fromFile` is expected to be a .csv file that is properly formatted.
-	public static List<Item> parseItems(String fromFile) {
+	public static HashMap<UUID, Item> parseItems(String fromFile, HashMap<UUID, Company> withCompanies) {
 		String itemsCsvString = readFileToString(fromFile);
-				
-		String[] lines = itemsCsvString.split("\\R+"); // splits on new-line combinations (\n, \n\r, \r\n, \r etc.)
+						
+		HashMap<UUID, Item> items = new HashMap<>(); 
 		
-		ArrayList<Item> items = new ArrayList<>(); 
-		
-		for (int i = 1; i < lines.length; i++) {
-			String[] splitLine = lines[i].split(",");
+		for (String line : linesOf(itemsCsvString)) {
+			String[] splitLine = line.split(",");
 			
 			UUID uuid = UUID.fromString(splitLine[0]);
 			String type = splitLine[1];
@@ -124,20 +122,25 @@ public abstract class Parser {
 				int retailPrice = Integer.parseInt(splitLine[4]);
 				item = new Equipment(uuid, name, modelNumber, retailPrice);
 			} else if (type.equals("C")) {
-				UUID companyUuid = UUID.fromString(splitLine[0]);
-				item = new Contract(uuid, name, companyUuid);
+				UUID subcontractorUuid = UUID.fromString(splitLine[0]);
+				Company subcontractor = withCompanies.get(subcontractorUuid);
+				if (subcontractor == null) {
+					System.err.println("Subcontractor with UUID: \"" + subcontractorUuid + "\" not found in `withCompanies`.");
+					System.exit(1);
+				}
+				item = new Contract(uuid, name, subcontractor);
 			} else {
-				System.err.println("Error: Unknown item type \"" + type + "\" found on line " + (i + 1) + " of \"data/Items.csv\".");
+				System.err.println("Error: Unknown item type \"" + type + "\" found in \"data/Items.csv\".");
 				System.exit(1);
 			}
 						
-			items.add(item);
+			items.put(uuid, item);
 		}
 		
 		return items;
 	}
 	
-	public static HashMap<UUID, Invoice> parseInvoices(String fromFile) {
+	public static HashMap<UUID, Invoice> parseInvoices(String fromFile, HashMap<UUID, Person> withPeople) {
 		String InvoicesCsvString = readFileToString(fromFile);
 				
 		HashMap<UUID, Invoice> invoices = new HashMap<>(); 
@@ -149,8 +152,20 @@ public abstract class Parser {
 			UUID customerUuid = UUID.fromString(splitLine[1]);
 			UUID salespersonUuid = UUID.fromString(splitLine[2]);
 			String date = splitLine[3];
+			
+			Person customer = withPeople.get(customerUuid);
+			if (customer == null) {
+				System.err.println("Customer with UUID: \"" + customerUuid + "\" not found in `withPeople`.");
+				System.exit(1);
+			}
+			
+			Person salesperson = withPeople.get(salespersonUuid);
+			if (salesperson == null) {
+				System.err.println("Salesperson with UUID: \"" + salespersonUuid + "\" not found in `withPeople`.");
+				System.exit(1);
+			}
 
-			Invoice invoice = new Invoice(uuid, customerUuid, salespersonUuid, date);
+			Invoice invoice = new Invoice(uuid, customer, salesperson, date);
 						
 			invoices.put(uuid, invoice);
 		}
@@ -158,7 +173,7 @@ public abstract class Parser {
 		return invoices;
 	}
 	
-	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> addToInvoices, HashMap<UUID, Item> fromItems) {
+	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> addToInvoices, HashMap<UUID, Item> withItems) {
 		String invoiceItemsCsvString = readFileToString(fromFile);
 						
 		for (String line : linesOf(invoiceItemsCsvString)) {
@@ -167,7 +182,7 @@ public abstract class Parser {
 			UUID invoiceUuid = UUID.fromString(splitLine[0]);
 			UUID itemUuid = UUID.fromString(splitLine[1]);
 						
-			Item item = fromItems.get(itemUuid);
+			Item item = withItems.get(itemUuid);
 						
 			if (item.getClass() == Equipment.class) {
 				Equipment equipment = (Equipment) item;
