@@ -26,8 +26,16 @@ public abstract class Parser {
 	}
 	
 	// Splits a string up into lines (\n, \n\r, \r\n, \r etc.)
-	public static String[] linesOf(String string) {
-		return string.split("\\R+"); 
+	public static List<String> linesOf(String string, int skip) {
+		ArrayList<String> lines = new ArrayList<>();
+		
+		String[] lineData = string.split("\\R+"); 
+
+		for (int i = skip; i < lineData.length; i++) {
+			lines.add(lineData[i]);
+		}
+		
+		return lines;
 	}
 	
 	// Writes `string` to the file at `fileName`.
@@ -47,7 +55,7 @@ public abstract class Parser {
 						
 		HashMap<UUID, Person> persons = new HashMap<>(); 
 		
-		for (String line : linesOf(personsCsvString)) {
+		for (String line : linesOf(personsCsvString, 1)) {
 			String[] splitLine = line.split(",");
 			
 			UUID uuid = UUID.fromString(splitLine[0]);
@@ -71,7 +79,7 @@ public abstract class Parser {
 						
 		HashMap<UUID, Company> companies = new HashMap<>(); 
 		
-		for (String line : linesOf(companiesCsvString)) {
+		for (String line : linesOf(companiesCsvString, 1)) {
 			String[] splitLine = line.split(",");
 						
 			UUID uuid = UUID.fromString(splitLine[0]);
@@ -104,7 +112,7 @@ public abstract class Parser {
 						
 		HashMap<UUID, Item> items = new HashMap<>(); 
 		
-		for (String line : linesOf(itemsCsvString)) {
+		for (String line : linesOf(itemsCsvString, 1)) {
 			String[] splitLine = line.split(",");
 			
 			UUID uuid = UUID.fromString(splitLine[0]);
@@ -145,7 +153,7 @@ public abstract class Parser {
 				
 		HashMap<UUID, Invoice> invoices = new HashMap<>(); 
 		
-		for (String line : linesOf(InvoicesCsvString)) {
+		for (String line : linesOf(InvoicesCsvString, 1)) {
 			String[] splitLine = line.split(",");
 						
 			UUID uuid = UUID.fromString(splitLine[0]);
@@ -176,7 +184,7 @@ public abstract class Parser {
 	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> addToInvoices, HashMap<UUID, Item> withItems) {
 		String invoiceItemsCsvString = readFileToString(fromFile);
 						
-		for (String line : linesOf(invoiceItemsCsvString)) {
+		for (String line : linesOf(invoiceItemsCsvString, 1)) {
 			String[] splitLine = line.split(",");
 						
 			UUID invoiceUuid = UUID.fromString(splitLine[0]);

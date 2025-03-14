@@ -13,5 +13,11 @@ public class InvoiceReport {
 			System.out.println("Tax total: $" + invoice.taxTotal());
 			System.out.println("Grand total: $" + invoice.grandTotal());
 		}
+		
+//		The first report will give a summary of all invoices along with a few totals.
+
+//		The second report will give a similar summary but for each customer.
+
+//		The final report will give details for each individual invoice.
 	}
 }

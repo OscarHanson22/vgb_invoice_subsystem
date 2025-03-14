@@ -20,4 +20,29 @@ public class InvoiceSubsystem {
 	public List<Invoice> addInvoiceItems(String invoiceItemsFilePath) {
 		return Parser.parseInvoiceItems(invoiceItemsFilePath, invoices, items);
 	}
+	
+	public void debug() {
+		System.out.println(people);
+		System.out.println(companies);
+		System.out.println(items);
+		for (Invoice invoice : invoices.values()) {
+			System.out.println(invoice);		
+		}
+	}
+	
+	public static void main(String[] args) {		
+		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/PersonsTest.csv", "data/CompaniesTest.csv", "data/ItemsTest.csv", "data/InvoicesTest.csv");
+		
+		List<Invoice> invoices = invoiceSubsystem.addInvoiceItems("data/InvoiceItemsTest.csv");
+		
+		for (Invoice invoice : invoices) {
+			System.out.println(invoice.getUuid());
+			System.out.println("Subtotal: $" + invoice.subtotal());
+			System.out.println("Tax total: $" + invoice.taxTotal());
+//			System.out.println("Grand total: $" + invoice.grandTotal());
+			System.out.println();
+		}
+		
+		invoiceSubsystem.debug();
+	}
 }

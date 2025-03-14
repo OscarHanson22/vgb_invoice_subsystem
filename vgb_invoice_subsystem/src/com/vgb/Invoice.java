@@ -6,8 +6,7 @@ import java.util.UUID;
 import com.vgb.financial_handlers.Total;
 
 // A representation of an invoice in the invoicing subsystem.
-public class Invoice {
-	private UUID uuid;
+public class Invoice extends Identifiable {
 	private Person customer;
 	private Person salesperson;
 	private String date;
@@ -16,13 +15,12 @@ public class Invoice {
 	
 	// Creates a new invoice with the specified information.
 	public Invoice(UUID uuid, Person customer, Person salesperson, String date) {
-		this.uuid = uuid;
+		super(uuid);
 		this.customer = customer;
 		this.salesperson = salesperson;
 		this.date = date;
 		this.total = Total.empty();
 		this.items = new ArrayList<>();
-		
 	}
 	
 	// Adds an item's total to the invoice. 
@@ -48,6 +46,6 @@ public class Invoice {
 
 	@Override
 	public String toString() {
-		return "Invoice [uuid=" + uuid + ", customer=" + customer + ", salesperson=" + salesperson + ", date=" + date + "]";
+		return "Invoice [uuid=" + this.getUuid() + ", customer=" + customer + ", salesperson=" + salesperson + ", date=" + date + ", items=" + items + "]";
 	}
 }
