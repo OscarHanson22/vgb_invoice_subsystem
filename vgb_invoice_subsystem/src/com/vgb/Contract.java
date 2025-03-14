@@ -2,8 +2,6 @@ package com.vgb;
 
 import java.util.UUID;
 
-import com.vgb.financial_handlers.Total;
-
 // Represents a contract with another company. 
 public class Contract extends Item {
 	private Company subcontractor;

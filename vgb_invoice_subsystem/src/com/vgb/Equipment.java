@@ -2,9 +2,6 @@ package com.vgb;
 
 import java.util.UUID;
 
-import com.vgb.financial_handlers.Round;
-import com.vgb.financial_handlers.Total;
-
 // Represents a piece of equipment in the invoice subsystem. 
 public class Equipment extends Item {
 	private static final double TAX_RATE = 0.0525;

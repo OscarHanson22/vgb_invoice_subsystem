@@ -3,9 +3,6 @@ package com.vgb;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-import com.vgb.financial_handlers.Round;
-import com.vgb.financial_handlers.Total;
-
 public class EquipmentLease extends Equipment {
 	private static final double MARKUP = 0.5;
 	private LocalDate startDate;

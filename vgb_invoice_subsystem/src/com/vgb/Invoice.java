@@ -1,9 +1,8 @@
 package com.vgb;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-
-import com.vgb.financial_handlers.Total;
 
 // A representation of an invoice in the invoicing subsystem.
 public class Invoice extends Identifiable {
@@ -23,6 +22,22 @@ public class Invoice extends Identifiable {
 		this.items = new ArrayList<>();
 	}
 	
+	public Person getCustomer() {
+		return customer;
+	}
+
+	public Person getSalesperson() {
+		return salesperson;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
 	// Adds an item's total to the invoice. 
 	public void addItem(Item item) {
 		items.add(item);
@@ -42,6 +57,10 @@ public class Invoice extends Identifiable {
 	// Returns the grand total (subtotal and total tax) of the invoice. 
 	public double grandTotal() {
 		return total.getTotal();
+	}
+	
+	public Total getTotal() {
+		return total;
 	}
 
 	@Override

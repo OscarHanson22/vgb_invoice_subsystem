@@ -1,8 +1,5 @@
 package com.vgb;
 
-import com.vgb.financial_handlers.Round;
-import com.vgb.financial_handlers.Total;
-
 public class EquipmentPurchase extends Equipment {
 	private static final double TAX_RATE = 0.0525;
 	

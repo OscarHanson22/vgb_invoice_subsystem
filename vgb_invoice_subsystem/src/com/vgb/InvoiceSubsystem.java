@@ -29,7 +29,7 @@ public class InvoiceSubsystem {
 //			System.out.println(invoice);		
 //		}
 //	}
-	
+		
 	public static void main(String[] args) {		
 		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/PersonsTest.csv", "data/CompaniesTest.csv", "data/ItemsTest.csv", "data/InvoicesTest.csv");
 		
@@ -43,6 +43,6 @@ public class InvoiceSubsystem {
 			System.out.println();
 		}
 		
-		invoiceSubsystem.debug();
+//		invoiceSubsystem.debug();
 	}
 }

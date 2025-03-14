@@ -2,8 +2,6 @@ package com.vgb;
 
 import java.util.UUID;
 
-import com.vgb.financial_handlers.Total;
-
 // Represents the basic information of an item in the invoice subsystem. 
 public abstract class Item extends Identifiable {
 	private String name;

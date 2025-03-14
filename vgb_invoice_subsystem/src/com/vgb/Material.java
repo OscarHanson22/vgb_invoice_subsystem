@@ -2,9 +2,6 @@ package com.vgb;
 
 import java.util.UUID;
 
-import com.vgb.financial_handlers.Round;
-import com.vgb.financial_handlers.Total;
-
 // A representation of a material in the invoice subsystem. 
 public class Material extends Item {	
 	public static final double TAX_RATE = 0.0715;

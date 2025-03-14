@@ -1,4 +1,4 @@
-package com.vgb.financial_handlers;
+package com.vgb;
 
 public class Total {
 	private double cost;
