@@ -2,17 +2,19 @@ package com.vgb.financial_handlers;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+
+import com.vgb.Equipment;
 
 /*
  * A class that handles leasing "something."
  */
-public class Leaser {
-	private double markup;
+public class EquipmentLeaser extends Equipment {
+	private static final double MARKUP = 0.5;
 	
-	// Creates a leaser with a given markup. 
-	// A markup value of `0.5` would correspond to a 50% markup.
-	public Leaser(double markup) {
-		this.markup = markup;
+	// Creates a leaser. 
+	public EquipmentLeaser(Equipment equipment) {
+		super(equipment.getUuid(), equipment.getName(), equipment.getModelNumber(), equipment.getRetailPrice());
 	}
 
 	// Returns a total (which includes raw cost and tax amounts) given the price and amount of hours of renting something.
@@ -20,7 +22,7 @@ public class Leaser {
 		int leaseDurationInDays = (int) ChronoUnit.DAYS.between(startDate, endDate) + 1; // the `endDate` is treated as exclusive
 		double leaseDurationInYears = (double) leaseDurationInDays / 365;
 		double fiveYearAmortization = leaseDurationInYears / 5.0;
-		double cost = Round.toCents(fiveYearAmortization * price * (1.0 + markup));
+		double cost = Round.toCents(fiveYearAmortization * price * (1.0 + MARKUP));
 		
 		double tax = 0.0;
 		if (cost < 5000.00) {

@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 // A representation of a person in the invoice subsystem. 
-public class Person {
-	private UUID uuid;
+public class Person extends Identifiable {
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
@@ -14,19 +13,15 @@ public class Person {
 
 	// Creates and returns a Person from the given information. 
 	public Person(UUID uuid, String firstName, String lastName, String phoneNumber, List<String> emailAddresses) {
-		this.uuid = uuid;
+		super(uuid);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.emailAddresses = new ArrayList<>(emailAddresses);
 	}
-	
-	public UUID getUuid() {
-		return uuid;
-	}
 
 	@Override
 	public String toString() {
-		return "Person [uuid=" + uuid + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailAddresses=" + emailAddresses + "]";
+		return "Person [uuid=" + this.getUuid() + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailAddresses=" + emailAddresses + "]";
 	}
 }

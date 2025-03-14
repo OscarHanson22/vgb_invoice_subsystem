@@ -2,6 +2,8 @@ package com.vgb;
 
 import java.util.UUID;
 
+import com.vgb.financial_handlers.Total;
+
 // Represents the basic information of an item in the invoice subsystem. 
 public abstract class Item {
 	private UUID uuid;
@@ -16,6 +18,12 @@ public abstract class Item {
 	public UUID getUuid() {
 		return uuid;
 	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public abstract Total getTotal();
 
 	@Override
 	public String toString() {

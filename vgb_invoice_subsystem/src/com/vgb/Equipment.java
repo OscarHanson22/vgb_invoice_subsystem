@@ -14,6 +14,10 @@ public class Equipment extends Item {
 		this.retailPrice = (double) retailPrice;
 	}
 	
+	public String getModelNumber() {
+		return modelNumber;
+	}
+	
 	public double getRetailPrice() {
 		return retailPrice;
 	}

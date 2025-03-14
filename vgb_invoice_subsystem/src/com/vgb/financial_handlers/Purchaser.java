@@ -3,7 +3,7 @@ package com.vgb.financial_handlers;
 /*
  * A class that handles purchasing "something."
  */
-public class Purchaser {
+public class EquipmentPurchaser {
 	private double taxRate;
 	
 	// Creates a purchaser with a given tax rate. 

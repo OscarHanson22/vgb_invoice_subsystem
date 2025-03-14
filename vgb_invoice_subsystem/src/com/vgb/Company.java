@@ -3,16 +3,16 @@ package com.vgb;
 import java.util.UUID;
 
 // A representation of a company in the invoice subsystem. 
-public class Company {
+public class Company extends Identifiable {
 	private UUID uuid;
-	private String contactUuid;
+	private Person contact;
 	private String name;
 	private Address address;
 	
 	// Creates and returns a Company from the given information. 
-	public Company(UUID uuid, String contactUuid, String name, Address address) {
-		this.uuid = uuid;
-		this.contactUuid = contactUuid;
+	public Company(UUID uuid, Person contact, String name, Address address) {
+		super(uuid);
+		this.contact = contact;
 		this.name = name;
 		this.address = address;
 	}
