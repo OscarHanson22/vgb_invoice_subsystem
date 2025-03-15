@@ -29,4 +29,9 @@ public class Total {
 	public double getTotal() {
 		return cost + tax;
 	}
+	
+	@Override
+	public String toString() {
+		return "Cost: $" + String.format("%.2f", cost) + ", Tax: $" + String.format("%.2f", tax) + ", Total: $" + String.format("%.2f", getTotal());
+	}
 }

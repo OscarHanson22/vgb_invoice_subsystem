@@ -38,6 +38,6 @@ public class Person extends Identifiable {
 
 	@Override
 	public String toString() {
-		return "Person [uuid=" + this.getUuid() + ", firstName=" + firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", emailAddresses=" + emailAddresses + "]";
+		return firstName + " " + lastName + " (" + this.getUuid() + ") | " + "Phone: " + phoneNumber + ", Email(s): " + emailAddresses;
 	}
 }

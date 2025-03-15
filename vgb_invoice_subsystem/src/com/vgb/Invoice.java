@@ -6,14 +6,14 @@ import java.util.UUID;
 
 // A representation of an invoice in the invoicing subsystem.
 public class Invoice extends Identifiable {
-	private Person customer;
+	private Company customer;
 	private Person salesperson;
 	private String date;
 	private Total total;
 	private ArrayList<Item> items;
 	
 	// Creates a new invoice with the specified information.
-	public Invoice(UUID uuid, Person customer, Person salesperson, String date) {
+	public Invoice(UUID uuid, Company customer, Person salesperson, String date) {
 		super(uuid);
 		this.customer = customer;
 		this.salesperson = salesperson;
@@ -22,7 +22,7 @@ public class Invoice extends Identifiable {
 		this.items = new ArrayList<>();
 	}
 	
-	public Person getCustomer() {
+	public Company getCustomer() {
 		return customer;
 	}
 

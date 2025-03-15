@@ -14,11 +14,13 @@ public class InvoiceSubsystem {
 		people = Parser.parsePeople(peopleFilePath);
 		companies = Parser.parseCompanies(companiesFilePath, people);
 		items = Parser.parseItems(itemsFilePath, companies);
-		invoices = Parser.parseInvoices(invoicesFilePath, people);
+		invoices = Parser.parseInvoices(invoicesFilePath, people, companies);
 	}
 	
 	public List<Invoice> addInvoiceItems(String invoiceItemsFilePath) {
-		return Parser.parseInvoiceItems(invoiceItemsFilePath, invoices, items);
+		List<Invoice> updated_invoices = Parser.parseInvoiceItems(invoiceItemsFilePath, invoices, items);
+		updated_invoices.sort((i1, i2) -> ((Double) i2.getTotal().getTotal()).compareTo(i1.getTotal().getTotal()));
+		return updated_invoices;
 	}
 	
 //	public void debug() {
@@ -34,6 +36,7 @@ public class InvoiceSubsystem {
 		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/PersonsTest.csv", "data/CompaniesTest.csv", "data/ItemsTest.csv", "data/InvoicesTest.csv");
 		
 		List<Invoice> invoices = invoiceSubsystem.addInvoiceItems("data/InvoiceItemsTest.csv");
+		
 		
 		for (Invoice invoice : invoices) {
 			System.out.println(invoice.getUuid());

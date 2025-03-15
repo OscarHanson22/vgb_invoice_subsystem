@@ -148,7 +148,7 @@ public abstract class Parser {
 		return items;
 	}
 	
-	public static HashMap<UUID, Invoice> parseInvoices(String fromFile, HashMap<UUID, Person> withPeople) {
+	public static HashMap<UUID, Invoice> parseInvoices(String fromFile, HashMap<UUID, Person> withPeople, HashMap<UUID, Company> withCompanies) {
 		String InvoicesCsvString = readFileToString(fromFile);
 				
 		HashMap<UUID, Invoice> invoices = new HashMap<>(); 
@@ -161,9 +161,9 @@ public abstract class Parser {
 			UUID salespersonUuid = UUID.fromString(splitLine[2]);
 			String date = splitLine[3];
 			
-			Person customer = withPeople.get(customerUuid);
+			Company customer = withCompanies.get(customerUuid);
 			if (customer == null) {
-				System.err.println("Customer with UUID: \"" + customerUuid + "\" not found in `withPeople`.");
+				System.err.println("Company with UUID: \"" + customerUuid + "\" not found in `withCompanies`.");
 				System.exit(1);
 			}
 			

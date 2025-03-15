@@ -1,0 +1,18 @@
+Invoice UUID: 4f6adb47-2fdd-43b5-8ad0-c10bb4116e52
+Customer: Eminem Boseman
+Salesperson: Oscar Hanson
+Number of items: 1
+
+Invoice UUID: 8a9bff38-24af-4a0c-b425-bf3a6fa64746
+Customer: Josh Terminator
+Salesperson: Oscar Hanson
+Number of items: 1
+
+Invoice UUID: c89f1367-ce43-459e-8988-7e4d8cce83ce
+Customer: Michael Starburst
+Salesperson: Oscar Hanson
+Number of items: 1
+
+Subtotal: $10726.0
+Tax Total: $15.61
+Grand Total: $10741.61
