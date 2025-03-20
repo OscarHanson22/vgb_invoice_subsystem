@@ -7,28 +7,14 @@ import java.util.Map;
 
 public class InvoiceReport {
 	public static void main(String[] args) {
-		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/PersonsTest.csv", "data/CompaniesTest.csv", "data/ItemsTest.csv", "data/InvoicesTest.csv");
-		List<Invoice> invoices = invoiceSubsystem.addInvoiceItems("data/InvoiceItemsTest.csv");
+		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/Persons.csv", "data/Companies.csv", "data/Items.csv", "data/Invoices.csv");
+		List<Invoice> invoices = invoiceSubsystem.addInvoiceItems("data/InvoiceItems.csv");
 		
-//		for (Invoice invoice : invoices) {
-//			System.out.println("Subtotal: $" + invoice.subtotal());
-//			System.out.println("Tax total: $" + invoice.taxTotal());
-//			System.out.println("Grand total: $" + invoice.grandTotal());
-//		}
-		
-		String outputFilePath = "data/output.txt";
-//		
-		System.out.println(customersSummary(invoices));
-//		System.out.println("NEXT SUMMARYYYYYYYYYYYYYYYYY");
-//		invoiceDetailedSummary(invoices);
-//		System.out.println("NEXT SUMMARYYYYYYYYYYYYYYYYY");
-//		customerSummary(invoices);
+		System.out.println(customersSummary(invoices) + "\n\n");
+		System.out.println(customersSummary(invoices) + "\n\n");
+		System.out.println(detailedInvoicesSummary(invoices) + "\n\n");
 	}
-		
-		
-//		The first report will give a summary of all invoices along with a few totals.
 
-//		The second report will give a similar summary but for each customer.
 	public static String customersSummary(List<Invoice> invoices) {
 		Total total = Total.empty();
 		int totalAmountOfInvoices = 0;
@@ -43,7 +29,7 @@ public class InvoiceReport {
 		for (Invoice invoice : invoices) {
 	    	String customerName = invoice.getCustomer().getName();
 	    	customerTotals.putIfAbsent(customerName, Total.empty());
-	    	Total customerTotal = customerTotals.get(customerName);
+	    	Total customerTotal = customerTotals.get(customerName);	    	
 	    	customerTotal.add(invoice.getTotal());
 	    	customerTotals.put(customerName, customerTotal);
 	    	customerInvoiceAmount.putIfAbsent(customerName, 0);
@@ -62,6 +48,7 @@ public class InvoiceReport {
             if (totals.hasNext()) {
                 Map.Entry<String, Total> nameAndTotal = totals.next();
                 customerName = nameAndTotal.getKey();
+                customerTotal = nameAndTotal.getValue();
             }
 
             if (amountOfInvoices.hasNext()) {
@@ -83,28 +70,18 @@ public class InvoiceReport {
 		return companiesStringBuilder.toString();
     }
     
-
-//		The final report will give details for each individual invoice.
-	public static void invoiceDetailedSummary(List<Invoice> invoices) {
+	public static String detailedInvoicesSummary(List<Invoice> invoices) {
+		StringBuilder invoicesStringBuilder = new StringBuilder();
 		
-		
-		System.out.println("Invoice Detailed Summary:");
+		invoicesStringBuilder.append("Detailed Summary Report \n\n");
 		
         for (Invoice invoice : invoices) {
-            System.out.println("Invoice UUID: " + invoice.getUuid());
-            System.out.println("Customer: " + invoice.getCustomer().getFirstName() + " " + invoice.getCustomer().getLastName());
-            System.out.println("Salesperson: " + invoice.getSalesperson().getFirstName() + " " + invoice.getSalesperson().getLastName());
-            System.out.println("Items:");
-            
-        for (Item item : invoice.getItems()) {
-            System.out.println("  - " + item.getName() + " | Price: $" + item.getTotal());
+        	invoicesStringBuilder.append(invoice);
+        	invoicesStringBuilder.append(invoice.getTotal() + "\n\n");
         }
-            
-        System.out.println("Subtotal: $" + invoice.subtotal());
-        System.out.println("Tax Total: $" + invoice.taxTotal());
-        System.out.println("Grand Total: $" + invoice.grandTotal());
-        System.out.println("------------------------------");
-        }
+        
+        
+        return invoicesStringBuilder.toString();
     }
 	
 	public static String invoicesSummary(List<Invoice> invoices) {
@@ -135,5 +112,4 @@ public class InvoiceReport {
 	
 		return invoicesStringBuilder.toString();
 	}
-	
 }

@@ -130,7 +130,7 @@ public abstract class Parser {
 				int retailPrice = Integer.parseInt(splitLine[4]);
 				item = new Equipment(uuid, name, modelNumber, retailPrice);
 			} else if (type.equals("C")) {
-				UUID subcontractorUuid = UUID.fromString(splitLine[0]);
+				UUID subcontractorUuid = UUID.fromString(splitLine[3]);
 				Company subcontractor = withCompanies.get(subcontractorUuid);
 				if (subcontractor == null) {
 					System.err.println("Subcontractor with UUID: \"" + subcontractorUuid + "\" not found in `withCompanies`.");

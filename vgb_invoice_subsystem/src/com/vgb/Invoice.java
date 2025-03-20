@@ -65,6 +65,11 @@ public class Invoice extends Identifiable {
 
 	@Override
 	public String toString() {
-		return "Invoice [uuid=" + this.getUuid() + ", customer=" + customer + ", salesperson=" + salesperson + ", date=" + date + ", items=" + items + "]";
+		StringBuilder invoiceSB = new StringBuilder();
+		invoiceSB.append("Invoice UUID: " + this.getUuid() + " Date: " + date + "\nCustomer: " + customer + "\nSalesperson: " + salesperson + "\nItems (" + items.size() + "):\n");
+		for (Item item : items) {
+			invoiceSB.append(" - " + item + "\n");
+		}
+		return invoiceSB.toString();
 	}
 }

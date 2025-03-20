@@ -32,7 +32,7 @@ public class Equipment extends Item {
 	
 	@Override
 	public String toString() {
-		return "Equipment [modelNumber=" + modelNumber + ", retailPrice=" +  String.format("%.2f", retailPrice) + ", " + super.toString() + "]";
+		return super.toString() + " | Model: " + modelNumber + ", Retail: $" + String.format("%.2f", retailPrice);
 	}
 }
 

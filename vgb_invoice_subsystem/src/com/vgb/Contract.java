@@ -35,6 +35,6 @@ public class Contract extends Item {
 
 	@Override
 	public String toString() {
-		return "Contract [" + super.toString() + "subcontractor=" + subcontractor.toString() + "]";
+		return super.toString() + " | Amount: $" + String.format("%.2f", amount);
 	}
 }

@@ -1,16 +1,19 @@
-uuid,type,name,field(s)
-2dd5220e-6779-4fe7-81d2-b79dcbff3415,E,Dragline,DX200b,347125
-4c0c851d-0466-42c8-8631-0b414db5be98,E,Bulldozer,XPXY4,125500
-984bac8d-96f7-4d6b-9948-1cabae15ba51,E,Compactor,FLT100,4500
-50e6f93f-3792-459f-b1c6-b512b994ff2b,E,Dump Truck,DUMPRX5000,90450
-e9afb98d-ac99-4974-a274-2dca5c1238f5,E,Skid-Steer,S4325,8500
-ac47e0f6-5d5b-49fe-af54-a6625a6374a8,M,concrete,bag,40
-72e157ac-5b46-4b3b-b86b-599a89be7289,M,sand,ton,1500
-97dc9f91-c009-4e8d-b08c-3d4d0ded0bad,M,nails,box,15
-30bebf58-ba44-4bef-885f-8fccb7db9544,M,lumber,lft,8
-8c8bbffa-a939-44f4-98b7-66837e7d16e9,M,drywall,sheet,35
-38bebacb-a3ca-459e-a71f-8e5826a2f7fa,C,foundation pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
-699607c3-d9db-4aef-a8ab-b3a6cab21e12,C,footing pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
-ce9fc7f6-8be8-48cb-9236-7873dbf9b2b7,C,concrete pad pour,0673a09a-5cc1-4269-88f2-e665c2f3f33c
-97ee84b8-dc93-4db2-84bd-48e72a7f3131,C,electric install,a8bae950-96ac-43a9-9a29-729db552e981
-b118fa82-14cf-46f4-8574-41e583badc27,C,generator install,a8bae950-96ac-43a9-9a29-729db552e981
+uuid,type,name,fields
+624a4440-a7a6-4fea-b691-1140e8de27e0,E,Bulldozer,XPXY4,8128
+9bdbc0e0-ed4e-4480-b196-a394941d1693,M,aluminum,pallet,53
+ec0cbcb9-a999-46a7-b810-c90a5278358a,C,transportation,ddd26d0d-6fea-460c-96b2-3cbbb196a863
+40fe7eb3-8e4e-4829-a4f3-65ab6169489f,M,aluminum,crate,73
+6510b369-df14-436a-a57f-1b97952082f1,C,excavation,4e980377-6242-4778-82bf-44d40e59d9c2
+d6b5d015-e6d2-43e0-b659-db981f54b52a,M,concrete,box,37
+a1558c20-883e-4960-aba6-87f1156dc157,M,plastic,barrel,62
+5211e55f-2e0a-4f08-a64e-a7ad2e5868b3,E,Compactor,XPXY4,3613
+2abbe3fe-53c5-444e-8481-b924924480a6,M,aluminum,barrel,28
+bf545f08-0d51-4b59-815a-4d0b7fa1ab6c,C,transportation,2c2d5dd3-3e31-457c-a899-cb5dd2cd9a3b
+25c58b01-12ac-43ed-b311-b529a77f1ed3,E,Compactor,IDK-12389,2065
+8fbd1afb-97c0-4361-9ba5-9619d99da399,M,steel,box,21
+4bc4e89c-4b1f-48a1-9c29-5cc5003b03e5,M,steel,pallet,11
+690a177a-8591-49c0-b447-72caecf16887,C,warehousing,5bca0202-4db1-45d2-9db4-8d564a529f13
+ae660bc5-7afb-4ead-b121-899dbebacdda,E,Skid-Steer,CMTX-100,1774
+bf7f8891-8143-44f6-b750-887d425010c6,M,aluminum,box,64
+facb19ce-5eb3-4d52-bb75-f97729bd74b3,C,demolition,39e2caee-474f-41f0-83ea-1ffaee07f485
+5c3c05c9-9deb-4f6c-8454-8e8e0a5e76f7,C,transportation,9fde1bac-a7ae-4f0e-8438-beae0f0ac4f2

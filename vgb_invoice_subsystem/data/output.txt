@@ -1,18 +1,67 @@
+Summary Report | By Total
+
 Invoice UUID: 4f6adb47-2fdd-43b5-8ad0-c10bb4116e52
-Customer: Eminem Boseman
-Salesperson: Oscar Hanson
-Number of items: 1
+Customer: Company B
+Sold by: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Number of Items: 1
+Cost: $10501.00, Tax: $0.00, Total: $10501.00
 
 Invoice UUID: 8a9bff38-24af-4a0c-b425-bf3a6fa64746
-Customer: Josh Terminator
-Salesperson: Oscar Hanson
-Number of items: 1
+Customer: Company A
+Sold by: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Number of Items: 1
+Cost: $200.00, Tax: $14.30, Total: $214.30
 
 Invoice UUID: c89f1367-ce43-459e-8988-7e4d8cce83ce
-Customer: Michael Starburst
-Salesperson: Oscar Hanson
-Number of items: 1
+Customer: Company C
+Sold by: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Number of Items: 1
+Cost: $25.00, Tax: $1.31, Total: $26.31
 
+Total Number of Items: 3
 Subtotal: $10726.0
 Tax Total: $15.61
 Grand Total: $10741.61
+
+
+Company Invoice Summary Report
+
+Customer: Company A
+Number of Invoices: 1
+Grand Total: $214.30
+
+Customer: Company B
+Number of Invoices: 1
+Grand Total: $10501.00
+
+Customer: Company C
+Number of Invoices: 1
+Grand Total: $26.31
+
+Total Number of Invoices: 3
+Grand Total: $10741.61
+
+
+Detailed Summary Report 
+
+Invoice UUID: 4f6adb47-2fdd-43b5-8ad0-c10bb4116e52 Date: 2025-02-16
+Customer: Company B (b6677ab8-f204-41ec-a297-406b89dd56b6) | Contact: Eminem Boseman (17a2a995-6555-46e2-8630-bfd3d8765d78) | Phone: 222-222-2222, Email(s): [eminemnottherapper@gmail.com] | Address: 2222 B Ave, B City, VE, 77889
+Salesperson: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Items (1):
+ - tiling (b6677ab8-f204-41ec-a297-406b89dd56b6) | Amount: $10501.00
+Cost: $10501.00, Tax: $0.00, Total: $10501.00
+
+Invoice UUID: 8a9bff38-24af-4a0c-b425-bf3a6fa64746 Date: 2025-01-13
+Customer: Company A (4c141f07-3e8c-4d77-abc4-3e2058fb7e30) | Contact: Josh Terminator (c4147f3a-029c-4c8e-8710-3b29a02019d3) | Phone: 111-111-1111, Email(s): [joshtheterminator@yahoo.com] | Address: 1111 A Street, A City, NE, 68848
+Salesperson: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Items (1):
+ - concrete (4c141f07-3e8c-4d77-abc4-3e2058fb7e30) | Unit: lbs, Cost Per Unit: $2.00, Quantity: 100
+Cost: $200.00, Tax: $14.30, Total: $214.30
+
+Invoice UUID: c89f1367-ce43-459e-8988-7e4d8cce83ce Date: 2025-02-12
+Customer: Company C (85f7ab31-8118-4100-8d08-2e154da6e734) | Contact: Michael Starburst (365ecbd2-ed99-4cd6-8d63-d9da8c9caa89) | Phone: 333-333-3333, Email(s): [michael33@aol.com, michael33clone@aol.com] | Address: 3333 C Lane, C City, WI, 12345
+Salesperson: Oscar Hanson (ee444afd-39d1-4ed6-b611-7f5a8db842f8) | Phone: 555-555-5555, Email(s): [ohanson5@huskers.unl.edu]
+Items (1):
+ - shovel (85f7ab31-8118-4100-8d08-2e154da6e734) | Model: MODELNO, Retail: $25.00
+Cost: $25.00, Tax: $1.31, Total: $26.31
+

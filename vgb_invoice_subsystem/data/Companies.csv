@@ -1,6 +1,11 @@
 companyUuid,contactUuid,name,street,city,state,zip
-d7d7b071-e63f-4af5-88f3-2e47a09852fb,30f42bcf-2556-491e-8c0c-4e52d7dcfd90,Weissnat and Okuneva,531 Bunting Way,Pasadena,CA,91131
-e2b1228a-1066-4f79-99c6-321658ef1587,96aa54a4-f452-405c-82b2-12f262095f75,Abernathy-Schamberger,243 Oriole Avenue,Seattle,WA,98148
-d631d183-5276-49cd-8136-ba130df24826,cc88a3dc-64d6-4070-b9b0-b2ae9ace0061,Jacobi and White,46 Ruskin Lane,Amarillo,TX,79176
-a8bae950-96ac-43a9-9a29-729db552e981,ddd24cee-31fa-48ac-b311-04fc329bb03b,Klocko Inc,0 Ridge Oak Trail,Washington,DC,20566
-0673a09a-5cc1-4269-88f2-e665c2f3f33c,bc0d9b2c-39ad-4c01-a835-02cfe79bf43e,Mitchell LLC,5887 Bobwhite Trail,Philadelphia,PA,19136
+9fde1bac-a7ae-4f0e-8438-beae0f0ac4f2,8fc4fb17-a48f-4ac8-8282-c663c7eb434c,Central Intelligence Agency,Cypress Court,San Francisco,CA,91131
+39e2caee-474f-41f0-83ea-1ffaee07f485,29b00093-8ba8-4e94-b45a-14fc037a469f,BonBon Family Enterprises,Columbia Street,Omaha,NE,60616
+8e186611-ce1d-4192-b452-2095ed3c65ab,d2f1d01f-c58e-40f1-b67c-78fdd3b25bff,Wayne Enterprises,Cypress Drive,Chicago,IL,20566
+7a8eee4d-0e28-40a8-a4a6-dbcc41280866,3b28980b-f92d-494d-a06b-9e20339502f3,United States Department of Agriculture,Edgewood Road,North Platte,NE,98148
+5bca0202-4db1-45d2-9db4-8d564a529f13,6b48bda2-ef58-4660-8a8a-4ea0d7fa0397,Mitchell LLC,Cobblestone Court,Chicago,IL,68508
+1d34990f-8753-4c7f-a987-a9fb19cc4e54,1292e299-c9b7-4a7d-932d-20a7a15eb6b7,National Goat Racing Administration,Country Club Drive,Boston,MA,19136
+2c2d5dd3-3e31-457c-a899-cb5dd2cd9a3b,13b740e8-1b5e-4722-be16-acc64e5f1aff,Weissnat and Okuneva,Durham Road,Hastings,NE,20566
+4e980377-6242-4778-82bf-44d40e59d9c2,1292e299-c9b7-4a7d-932d-20a7a15eb6b7,Enron,Cypress Court,Lincoln,NE,98148
+ddd26d0d-6fea-460c-96b2-3cbbb196a863,48ddf481-38c4-4a4c-b773-0621e8234f0d,Stark Industries,Country Lane,Lincoln,NE,98148
+135fde08-449e-4813-ab9d-6b6e9300b69e,6a651f03-b6d7-470f-ad5a-7af6e8fe95f8,Central Intelligence Agency,College Street,Scottsbluff,NE,68508

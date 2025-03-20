@@ -30,6 +30,6 @@ public class Company extends Identifiable {
 
 	@Override
 	public String toString() {
-		return "Company [uuid=" + this.getUuid() + ", contact=" + contact.toString() + "name=" + name + ", address=" + address + "]";
+		return name + " (" + this.getUuid() + ") | Contact: " + contact + " | Address: " + address;
 	}
 }

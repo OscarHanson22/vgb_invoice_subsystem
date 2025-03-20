@@ -20,6 +20,6 @@ public abstract class Item extends Identifiable {
 
 	@Override
 	public String toString() {
-		return "uuid=" + this.getUuid() + ", name=" + name;
+		return name + " (" + this.getUuid() + ")";
 	}
 }
