@@ -75,8 +75,11 @@ create table InvoiceItem (
 );
 
 create table Address (
-	
-	foreign key (contactId) references Company(personId)
+	addressId not null primary key auto_increment,
+	city varchar(50) not null, 
+	state varchar(50) not null, 
+	zip varchar(50) not null, 
+	foreign key (personId) references Address(addressId)
 );
 
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
