@@ -52,10 +52,37 @@ group by invoice.salespersonId;
 
 -- A query to find the subtotal charge of all materials purchased in each invoice (hint: you can take an aggregate of a mathematical expression). Do not include taxes.
 
-
+select invoice.invoiceId, sum(invoice_item.cost) as subtotal from Invoice invoice 
+join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId
+join Item item on invoice_item.itemId = item.itemId
+where item.discriminator = 'Material'
+group by invoice.invoiceId;
 
 -- A query to detect invalid data in a invoice as follows. When a customer buys a certain material, they buy a certain number of units. It should not be the case that they buy (say) 20 boxes of nails and another 30 boxes of nails. Instead there should be one record of 50 boxes of nails.
+-- TODO
+
+select invoice.invoiceId, item.materialQuantity from Invoice invoice 
+join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId
+join Item item on invoice_item.itemId = item.itemId
+where item.discriminator = 'Material'
+group by invoice.invoiceId;
 
 -- Write a query to find and report any invoice that includes multiple records of the same material. If your database design prevents such a situation, you should still write this query (but of course would never expect any results).
+-- TODO
+select item.name from Invoice invoice 
+join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId
+join Item item on invoice_item.itemId = item.itemId;
+
+select invoice.invoiceId, item.uuid as subtotal from Invoice invoice 
+join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId
+join Item item on invoice_item.itemId = item.itemId
+where item.discriminator = 'Material'
+group by invoice.invoiceId;
+having 
 
 -- Write a query to detect a potential instance of fraud where an employee makes a sale to their own company (the same person is the sales person as well as the customer's primary contact).
+
+select person.personId as id, person.lastName as last_name, person.firstName as first_name, person.uuid as uuid from Invoice invoice
+join Company company on invoice.customerId = company.companyId
+join Person person on invoice.salespersonId = person.personId
+where invoice.salespersonId = company.contactId;

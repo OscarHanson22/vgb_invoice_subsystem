@@ -27,11 +27,9 @@ create table Company (
 	contactId int not null, 
 	uuid varchar(50) not null, 
     name varchar(100) not null, 
-    street varchar(100) not null, 
-    city varchar(50) not null, 
-    state varchar(50) not null, 
-    zip varchar(50) not null, 
-    foreign key (contactId) references Person(personId)
+    addressId int not null, 
+    foreign key (contactId) references Person(personId), 
+    foreign key (addressId) references Address(addressId)
 );
 
 create table Item (
@@ -73,6 +71,30 @@ create table InvoiceItem (
     foreign key (itemId) references Item(itemId)
 );
 
+-- create table Address (
+-- 	addressId int not null primary key auto_increment, 
+--     stateId int not null, 
+
+create table Address (
+	addressId int not null primary key auto_increment, 
+    street varchar(100), 
+    city varchar(100),
+    stateId int not null, 
+    zipId int not null, 
+    foreign key (stateId) references State(stateId),
+    foreign key (zipId) references Zip(zipId)
+);
+
+create table State (
+	stateId int not null primary key auto_increment,
+    name varchar(50)
+);
+
+create table Zip (
+	zipId int not null primary key auto_increment,
+    zip varchar(50)
+);
+
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (2,'17a2a995-6555-46e2-8630-bfd3d8765d78','Eminem','Boseman','222-222-2222');
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (3,'365ecbd2-ed99-4cd6-8d63-d9da8c9caa89','Michael','Starburst','333-333-3333');
@@ -102,6 +124,10 @@ insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total)
 insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total) values (2,2,5,'4f6adb47-2fdd-43b5-8ad0-c10bb4116e52','2025-02-16',0.0,0.0,0.0);
 insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total) values (3,3,5,'c89f1367-ce43-459e-8988-7e4d8cce83ce','2025-02-12',0.0,0.0,0.0);
 
-insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (1,1,1,0.0,0.0,0.0);
+insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total) values (4,5,5,'c89f1367-ce43-459e-8988-7e4d8cce83ce','2025-02-12',0.0,0.0,0.0);
+
+insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (1,1,1,1.0,0.5,1.5);
+insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (4,1,5,2.0,0.5,2.5);
+
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (2,2,2,0.0,0.0,0.0);
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (3,3,3,0.0,0.0,0.0);
