@@ -1,4 +1,5 @@
-use ohanson5;
+use ewolde2;
+
 
 drop table if exists InvoiceItem;
 drop table if exists Invoice;
@@ -7,6 +8,8 @@ drop table if exists Company;
 drop table if exists Email;
 drop table if exists Person;
 drop table if exists Address;
+drop table if exists Zipcode;
+drop table if exists State;
 
 create table Person (
 	personId int not null primary key auto_increment,
@@ -28,11 +31,9 @@ create table Company (
 	contactId int not null, 
 	uuid varchar(50) not null, 
     name varchar(100) not null, 
-    street varchar(100) not null, 
-    city varchar(50) not null, 
-    state varchar(50) not null, 
-    zip varchar(50) not null, 
-    foreign key (contactId) references Person(personId)
+    addressId int not null,
+    foreign key (contactId) references Person(personId),
+    foreign key (addressId) references Address(addressId)
 );
 
 create table Item (
@@ -40,12 +41,17 @@ create table Item (
      uuid varchar(50) not null, 
      name varchar(200) not null, 
      discriminator varchar(100) not null, 
+     
      equipmentModelNumber varchar(100), 
      equipmentRetailPrice double, 
      materialUnit varchar(100), 
      materialPricePerUnit double, 
-     materialQuantity int, 
-     contractSubcontractorId int, 
+     
+     -- lease start/end date rented hours
+     lease double,
+     startDate int not null,
+     endDate int not null,
+     rentedHours int not null,
      contractAmount double,
      foreign key (contractSubcontractorId) references Company(companyId)
 );
@@ -55,32 +61,46 @@ create table Invoice (
 	uuid varchar(50) not null, 
     date varchar(50) not null, 
     customerId int not null, 
-	salespersonId int not null, 
-    cost double not null, 
-    tax double not null, 
-    total double not null, 
+	salespersonId int not null,  
     foreign key (customerId) references Company(companyId),
     foreign key (salespersonId) references Person(personId)
 );
 
 create table InvoiceItem (
+	-- if it changes from sale to sale add to II.
+    lease double,
+	startDate int not null,
+	endDate int not null,
+	rentedHours int not null,
+	contractAmount double,
 	invoiceItemId int not null primary key auto_increment, 
+    contractSubcontractorId int,
     invoiceId int not null,
     itemId int not null, 
-	cost double not null, 
-    tax double not null, 
-    total double not null, 
+    materialQuantity int,
     foreign key (invoiceId) references Invoice(invoiceId), 
     foreign key (itemId) references Item(itemId)
 );
 
 create table Address (
-	addressId not null primary key auto_increment,
+	addressId int not null primary key auto_increment,
+    street varchar(100) not null, 
 	city varchar(50) not null, 
 	state varchar(50) not null, 
-	zip varchar(50) not null, 
-	personId int not null,
-	foreign key (personId) references Person(personId)
+	zipcodeId int not null,
+    foreign key (zipcodeId) references Zipcode(zipcodeId)
+);
+
+create table Zipcode (
+    stateId int not null,
+    zipcdeId int not null primary key,
+    zipcode varchar(50),
+    foreign key (stateId) references state(stateId)
+    
+);
+create table State (
+	stateId int not null primary key auto_increment,
+    stateName varchar(100) not null
 );
 
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
@@ -115,3 +135,7 @@ insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total)
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (1,1,1,0.0,0.0,0.0);
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (2,2,2,0.0,0.0,0.0);
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (3,3,3,0.0,0.0,0.0);
+
+insert into Address(addressId,personId,city,state,zip) values (1,1,"1234 Joe Street","Omaha","Nebraska",67463);
+insert into Address(addressId,personId,city,state,zip) values (2,2,"466 Jane Street","San Diego","California",67463);
+insert into Address(addressId,personId,city,state,zip) values (3,3,"282 O st","Denver","Colorado",67463);
