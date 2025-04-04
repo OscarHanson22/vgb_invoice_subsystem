@@ -52,7 +52,9 @@ group by invoice.salespersonId;
 
 -- A query to find the subtotal charge of all materials purchased in each invoice (hint: you can take an aggregate of a mathematical expression). Do not include taxes.
 
-
+select invoice.invoiceId, SUM(Item.materialQuantity * Item.materialPricePerUnit) AS subtotal_charge
+from Invoice invoice join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId join Item on Item.itemId = invoice_item.itemId
+group by invoice.invoiceId;
 
 -- A query to detect invalid data in a invoice as follows. When a customer buys a certain material, they buy a certain number of units. It should not be the case that they buy (say) 20 boxes of nails and another 30 boxes of nails. Instead there should be one record of 50 boxes of nails.
 
