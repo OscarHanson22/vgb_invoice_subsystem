@@ -13,7 +13,7 @@ drop table if exists State;
 
 create table Person (
 	personId int not null primary key auto_increment,
-    uuid varchar(50) not null, 
+	uuid varchar(50) not null, 
 	firstName varchar(50) not null, 
 	lastName varchar(50) not null, 
 	phoneNumber varchar(50) not null
@@ -22,85 +22,77 @@ create table Person (
 create table Email (
 	emailId int not null primary key auto_increment,
 	email varchar(100) not null, 
-    personId int not null, 
-    foreign key (personId) references Person(personId)
+	personId int not null, 
+	foreign key (personId) references Person(personId)
 );
 
 create table Company (
 	companyId int not null primary key auto_increment, 
 	contactId int not null, 
 	uuid varchar(50) not null, 
-    name varchar(100) not null, 
-    addressId int not null,
-    foreign key (contactId) references Person(personId),
-    foreign key (addressId) references Address(addressId)
+	name varchar(100) not null, 
+	addressId int not null,
+	foreign key (contactId) references Person(personId),
+	foreign key (addressId) references Address(addressId)
 );
 
 create table Item (
-	 itemId int not null primary key auto_increment,
-     uuid varchar(50) not null, 
-     name varchar(200) not null, 
-     discriminator varchar(100) not null, 
-     
-     equipmentModelNumber varchar(100), 
-     equipmentRetailPrice double, 
-     materialUnit varchar(100), 
-     materialPricePerUnit double, 
-     
-     -- lease start/end date rented hours
-     lease double,
-     startDate int not null,
-     endDate int not null,
-     rentedHours int not null,
-     contractAmount double,
-     foreign key (contractSubcontractorId) references Company(companyId)
+	itemId int not null primary key auto_increment,
+	uuid varchar(50) not null, 
+	name varchar(200) not null, 
+	discriminator varchar(100) not null, 
+	contractSubcontractorId int not null,
+	equipmentModelNumber varchar(100), 
+	equipmentRetailPrice double, 
+	materialUnit varchar(100), 
+	materialPricePerUnit double, 
+	foreign key (contractSubcontractorId) references Company(companyId)
 );
 
 create table Invoice (
 	invoiceId int not null primary key auto_increment,
 	uuid varchar(50) not null, 
-    date varchar(50) not null, 
-    customerId int not null, 
+	date varchar(50) not null, 
+	customerId int not null, 
 	salespersonId int not null,  
-    foreign key (customerId) references Company(companyId),
-    foreign key (salespersonId) references Person(personId)
+	foreign key (customerId) references Company(companyId),
+	foreign key (salespersonId) references Person(personId)
 );
 
 create table InvoiceItem (
 	-- if it changes from sale to sale add to II.
-    lease double,
+	lease double,
 	startDate int not null,
 	endDate int not null,
 	rentedHours int not null,
 	contractAmount double,
 	invoiceItemId int not null primary key auto_increment, 
-    contractSubcontractorId int,
-    invoiceId int not null,
-    itemId int not null, 
-    materialQuantity int,
-    foreign key (invoiceId) references Invoice(invoiceId), 
-    foreign key (itemId) references Item(itemId)
+	contractSubcontractorId int,
+	invoiceId int not null,
+	itemId int not null, 
+	materialQuantity int,
+	foreign key (invoiceId) references Invoice(invoiceId), 
+	foreign key (itemId) references Item(itemId)
 );
 
 create table Address (
 	addressId int not null primary key auto_increment,
-    street varchar(100) not null, 
+	street varchar(100) not null, 
 	city varchar(50) not null, 
-	state varchar(50) not null, 
 	zipcodeId int not null,
-    foreign key (zipcodeId) references Zipcode(zipcodeId)
+	foreign key (zipcodeId) references Zipcode(zipcodeId)
 );
 
 create table Zipcode (
-    stateId int not null,
-    zipcdeId int not null primary key,
-    zipcode varchar(50),
-    foreign key (stateId) references state(stateId)
+	stateId int not null,
+	zipcdeId int not null primary key,
+	zipcode varchar(50),
+	foreign key (stateId) references state(stateId)
     
 );
 create table State (
 	stateId int not null primary key auto_increment,
-    stateName varchar(100) not null
+	stateName varchar(100) not null
 );
 
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
