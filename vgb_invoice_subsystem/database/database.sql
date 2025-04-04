@@ -1,5 +1,3 @@
-use ewolde2;
-
 
 drop table if exists InvoiceItem;
 drop table if exists Invoice;
@@ -25,6 +23,27 @@ create table Email (
 	personId int not null, 
 	foreign key (personId) references Person(personId)
 );
+create table State (
+	stateId int not null primary key auto_increment,
+	stateName varchar(100) not null
+);
+
+create table Zipcode (
+	zipcodeId int not null primary key,
+    stateId int not null,
+	zipcode varchar(50),
+	foreign key (stateId) references State(stateId)
+);
+
+
+create table Address (
+	addressId int not null primary key auto_increment,
+	street varchar(100) not null, 
+	city varchar(50) not null, 
+	zipcodeId int not null,
+	foreign key (zipcodeId) references Zipcode(zipcodeId)
+);
+
 
 create table Company (
 	companyId int not null primary key auto_increment, 
@@ -35,6 +54,11 @@ create table Company (
 	foreign key (contactId) references Person(personId),
 	foreign key (addressId) references Address(addressId)
 );
+
+-- 17:48:41	create table Zipcode (  zipcodeId int not null primary key,     stateId int not null,  zipcode varchar(50),  foreign key (stateId) references state(stateId) )	Error Code: 1005. Can't create table `ewolde2`.`Zipcode` (errno: 150 "Foreign key constraint is incorrectly formed")	0.0045 sec
+
+
+
 
 create table Item (
 	itemId int not null primary key auto_increment,
@@ -75,26 +99,6 @@ create table InvoiceItem (
 	foreign key (itemId) references Item(itemId)
 );
 
-create table Address (
-	addressId int not null primary key auto_increment,
-	street varchar(100) not null, 
-	city varchar(50) not null, 
-	zipcodeId int not null,
-	foreign key (zipcodeId) references Zipcode(zipcodeId)
-);
-
-create table Zipcode (
-	stateId int not null,
-	zipcdeId int not null primary key,
-	zipcode varchar(50),
-	foreign key (stateId) references state(stateId)
-    
-);
-create table State (
-	stateId int not null primary key auto_increment,
-	stateName varchar(100) not null
-);
-
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (2,'17a2a995-6555-46e2-8630-bfd3d8765d78','Eminem','Boseman','222-222-2222');
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (3,'365ecbd2-ed99-4cd6-8d63-d9da8c9caa89','Michael','Starburst','333-333-3333');
@@ -107,6 +111,10 @@ insert into Email(emailId,personId,email) values (3,3,'michael33@aol.com');
 insert into Email(emailId,personId,email) values (4,3,'michael33clone@aol.com');
 insert into Email(emailId,personId,email) values (5,4,'ewolde2@huskers.unl.edu');
 insert into Email(emailId,personId,email) values (6,5,'ohanson5@huskers.unl.edu');
+
+insert into Address(addressId,street,city,state,zip) values (1,"1234 Joe Street","Omaha","Nebraska",67463);
+insert into Address(addressId,street,city,state,zip) values (2,"466 Jane Street","San Diego","California",67463);
+insert into Address(addressId,street,city,state,zip) values (3,"282 O st","Denver","Colorado",67463);
 
 insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (1,1,'4c141f07-3e8c-4d77-abc4-3e2058fb7e30','Company A','1111 A Street','A City','NE','68848');
 insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (2,2,'b6677ab8-f204-41ec-a297-406b89dd56b6','Company B','2222 B Ave','B City','VE','77889');
@@ -127,7 +135,3 @@ insert into Invoice(invoiceId,customerId,salespersonId,uuid,date,cost,tax,total)
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (1,1,1,0.0,0.0,0.0);
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (2,2,2,0.0,0.0,0.0);
 insert into InvoiceItem(invoiceItemId,invoiceId,itemId,cost,tax,total) values (3,3,3,0.0,0.0,0.0);
-
-insert into Address(addressId,personId,city,state,zip) values (1,1,"1234 Joe Street","Omaha","Nebraska",67463);
-insert into Address(addressId,personId,city,state,zip) values (2,2,"466 Jane Street","San Diego","California",67463);
-insert into Address(addressId,personId,city,state,zip) values (3,3,"282 O st","Denver","Colorado",67463);
