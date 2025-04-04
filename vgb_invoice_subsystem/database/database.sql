@@ -6,6 +6,7 @@ drop table if exists Item;
 drop table if exists Company;
 drop table if exists Email;
 drop table if exists Person;
+drop table if exists Address;
 
 create table Person (
 	personId int not null primary key auto_increment,
@@ -71,6 +72,11 @@ create table InvoiceItem (
     total double not null, 
     foreign key (invoiceId) references Invoice(invoiceId), 
     foreign key (itemId) references Item(itemId)
+);
+
+create table Address (
+	
+	foreign key (contactId) references Company(personId)
 );
 
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
