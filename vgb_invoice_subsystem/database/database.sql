@@ -80,7 +80,7 @@ create table Address (
 	state varchar(50) not null, 
 	zip varchar(50) not null, 
 	personId int not null,
-	foreign key (personId) references Address(addressId)
+	foreign key (personId) references Person(personId)
 );
 
 insert into Person(personId,uuid,firstName,lastName,phoneNumber) values (1,'c4147f3a-029c-4c8e-8710-3b29a02019d3','Josh','Terminator','111-111-1111');
