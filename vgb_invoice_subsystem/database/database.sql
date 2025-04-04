@@ -79,6 +79,7 @@ create table Address (
 	city varchar(50) not null, 
 	state varchar(50) not null, 
 	zip varchar(50) not null, 
+	personId int not null,
 	foreign key (personId) references Address(addressId)
 );
 
