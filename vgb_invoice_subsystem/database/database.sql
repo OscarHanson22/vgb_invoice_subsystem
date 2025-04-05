@@ -1,3 +1,6 @@
+-- Author: Ermias Wolde
+-- Date: Apr 4, 2025
+-- Purpose:
 
 drop table if exists InvoiceItem;
 drop table if exists Invoice;
@@ -23,6 +26,7 @@ create table Email (
 	personId int not null, 
 	foreign key (personId) references Person(personId)
 );
+
 create table State (
 	stateId int not null primary key auto_increment,
 	stateName varchar(100) not null
@@ -54,9 +58,6 @@ create table Company (
 	foreign key (contactId) references Person(personId),
 	foreign key (addressId) references Address(addressId)
 );
-
--- 17:48:41	create table Zipcode (  zipcodeId int not null primary key,     stateId int not null,  zipcode varchar(50),  foreign key (stateId) references state(stateId) )	Error Code: 1005. Can't create table `ewolde2`.`Zipcode` (errno: 150 "Foreign key constraint is incorrectly formed")	0.0045 sec
-
 
 
 
@@ -112,15 +113,52 @@ insert into Email(emailId,personId,email) values (4,3,'michael33clone@aol.com');
 insert into Email(emailId,personId,email) values (5,4,'ewolde2@huskers.unl.edu');
 insert into Email(emailId,personId,email) values (6,5,'ohanson5@huskers.unl.edu');
 
-insert into Address(addressId,street,city,state,zip) values (1,"1234 Joe Street","Omaha","Nebraska",67463);
-insert into Address(addressId,street,city,state,zip) values (2,"466 Jane Street","San Diego","California",67463);
-insert into Address(addressId,street,city,state,zip) values (3,"282 O st","Denver","Colorado",67463);
+-- Address
+INSERT INTO State(stateName) VALUES ('Nebraska');
+INSERT INTO Zipcode(zipcodeId, zipcode, stateId) VALUES (67463, '67463', 1);  -- assuming stateId for Nebraska is 1
+INSERT INTO Address(street, city, zipcodeId) VALUES ('1234 Joe Street', "Omaha", 67463);
 
-insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (1,1,'4c141f07-3e8c-4d77-abc4-3e2058fb7e30','Company A','1111 A Street','A City','NE','68848');
-insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (2,2,'b6677ab8-f204-41ec-a297-406b89dd56b6','Company B','2222 B Ave','B City','VE','77889');
-insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (3,3,'85f7ab31-8118-4100-8d08-2e154da6e734','Company C','3333 C Lane','C City','WI','12345');
-insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (4,4,'aeb3835b-e365-46f1-84cc-a7dffb67bb86','Company D','4444 D Trail','D City','CA','99900');
-insert into Company(companyId,contactId,uuid,name,street,city,state,zip) values (5,5,'dc94e6f3-ef25-4ca9-8c42-50a72170d51b','Company E','5555 E Boulevard','E City','TX','09876');
+INSERT INTO State(stateName) VALUES ('Colorado');
+INSERT INTO Zipcode(zipcodeId, zipcode, stateId) VALUES (68943, '68943', 2);  -- assuming stateId for Nebraska is 1
+INSERT INTO Address(street, city, zipcodeId) VALUES ('543 O Street', "Denver", 68943);
+
+INSERT INTO State(stateName) VALUES ('California');
+INSERT INTO Zipcode(zipcodeId, zipcode, stateId) VALUES (68943, '68943', 2);  -- assuming stateId for Nebraska is 1
+INSERT INTO Address(street, city, zipcodeId) VALUES ('543 O Street', "San Diego", 20442);
+
+
+-- STEP 1: Insert States
+INSERT INTO State (stateName) VALUES 
+('NE'), -- stateId = 1
+('VE'), -- 2
+('WI'), -- 3
+('CA'), -- 4
+('TX'); -- 5
+
+-- STEP 2: Insert Zipcodes (linked to states)
+INSERT INTO Zipcode (zipcodeId, zipcode, stateId) VALUES
+(68848, '68848', 1),
+(77889, '77889', 2),
+(12345, '12345', 3),
+(99900, '99900', 4),
+(9876,  '09876', 5);  -- use 9876 or '09876' depending on type (assume INT for now)
+
+-- STEP 3: Insert Addresses (store city as text)
+INSERT INTO Address (street, city, zipcodeId) VALUES
+('1111 A Street', 'A City', 68848),    -- addressId = 1
+('2222 B Ave',    'B City', 77889),    -- addressId = 2
+('3333 C Lane',   'C City', 12345),    -- addressId = 3
+('4444 D Trail',  'D City', 99900),    -- addressId = 4
+('5555 E Boulevard', 'E City', 9876);  -- addressId = 5
+
+-- STEP 4: Insert Companies (link to personId and addressId)
+INSERT INTO Company (companyId, contactId, uuid, name, addressId) VALUES
+(1, 1, '4c141f07-3e8c-4d77-abc4-3e2058fb7e30', 'Company A', 1),
+(2, 2, 'b6677ab8-f204-41ec-a297-406b89dd56b6', 'Company B', 2),
+(3, 3, '85f7ab31-8118-4100-8d08-2e154da6e734', 'Company C', 3),
+(4, 4, 'aeb3835b-e365-46f1-84cc-a7dffb67bb86', 'Company D', 4),
+(5, 5, 'dc94e6f3-ef25-4ca9-8c42-50a72170d51b', 'Company E', 5);
+
 
 insert into Item(itemId,uuid,discriminator,name,materialUnit,materialPricePerUnit) values (1,'4c141f07-3e8c-4d77-abc4-3e2058fb7e30','Material','concrete','lbs','2.0');
 insert into Item(itemId,uuid,discriminator,name,contractSubcontractorId,contractAmount) values (2,'b6677ab8-f204-41ec-a297-406b89dd56b6','Contract','tiling',5,10501.0);
