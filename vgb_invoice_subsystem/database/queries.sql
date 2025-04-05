@@ -57,7 +57,10 @@ from Invoice invoice join InvoiceItem invoice_item on invoice.invoiceId = invoic
 group by invoice.invoiceId;
 
 -- A query to detect invalid data in a invoice as follows. When a customer buys a certain material, they buy a certain number of units. It should not be the case that they buy (say) 20 boxes of nails and another 30 boxes of nails. Instead there should be one record of 50 boxes of nails.
-
+SELECT invoiceId, itemId, SUM(materialQuantity) AS materialQuantity
+FROM InvoiceItem
+WHERE materialQuantity IS NOT NULL
+GROUP BY invoiceId, itemId;
 -- Write a query to find and report any invoice that includes multiple records of the same material. If your database design prevents such a situation, you should still write this query (but of course would never expect any results).
 
 -- Write a query to detect a potential instance of fraud where an employee makes a sale to their own company (the same person is the sales person as well as the customer's primary contact).
