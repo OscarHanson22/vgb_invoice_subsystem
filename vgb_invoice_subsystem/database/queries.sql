@@ -1,10 +1,14 @@
+-- Authors: Ermias Wolde and Oscar Hanson
+-- Date: Apr 4, 2025
+-- Purpose: A small series of test cases for the database information specified in 'database.sql'
+
 -- A query to retrieve the main attributes of each person (their UUID, and last/first name)
 
-select uuid, firstName, lastName from Person;
+select uuid, lastName, firstName from Person;
 
 -- A query to retrieve the major fields for every person including their email address(es)
 
-select uuid, firstName, lastName, phoneNumber, email from Person person
+select uuid, lastName, firstName, phoneNumber, email from Person person
 join Email email on person.personId = email.personId;
 
 -- A query to get the email addresses of a specific person
@@ -15,8 +19,7 @@ where person.firstName = 'Michael';
 
 -- A query to change the email address of a specific email record
 
-update Email 
-set email = 'newemailforoscar@gmail.com'
+update Email set email = 'newemailforoscar@gmail.com'
 where emailId = 6;
 
 -- A query (or series of queries) to remove a specific person record
@@ -43,7 +46,7 @@ where invoice.customerId = 2;
 
 -- A query to find the total number of invoices for each customer even if they do not have any*
 
-select company.companyId, count(invoice.invoiceId) as total_invoices from Company company
+select companyId, name, count(invoice.invoiceId) as total_invoices from Company company
 left join Invoice invoice on company.companyId = invoice.customerId
 group by company.companyId;
 
@@ -55,7 +58,8 @@ group by invoice.salespersonId;
 
 -- A query to find the subtotal charge of all materials purchased in each invoice (hint: you can take an aggregate of a mathematical expression). Do not include taxes.
 
-select invoice.invoiceId, sum(invoice_item.materialQuantity * item.materialPricePerUnit) AS subtotal_charge from Invoice invoice join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId 
+select invoice.invoiceId, sum(invoice_item.materialQuantity*item.materialPricePerUnit) AS subtotal_charge from Invoice invoice 
+join InvoiceItem invoice_item on invoice.invoiceId = invoice_item.invoiceId 
 join Item item on item.itemId = invoice_item.itemId
 where item.discriminator = 'Material'
 group by invoice.invoiceId;
