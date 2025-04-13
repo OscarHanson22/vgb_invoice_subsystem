@@ -1,5 +1,6 @@
 package com.vgb;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,12 +9,12 @@ import java.util.UUID;
 public class Invoice extends Identifiable {
 	private Company customer;
 	private Person salesperson;
-	private String date;
+	private LocalDate date;
 	private Total total;
 	private ArrayList<Item> items;
 	
 	// Creates a new invoice with the specified information.
-	public Invoice(UUID uuid, Company customer, Person salesperson, String date) {
+	public Invoice(UUID uuid, Company customer, Person salesperson, LocalDate date) {
 		super(uuid);
 		this.customer = customer;
 		this.salesperson = salesperson;
@@ -30,7 +31,7 @@ public class Invoice extends Identifiable {
 		return salesperson;
 	}
 
-	public String getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 

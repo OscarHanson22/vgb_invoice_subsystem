@@ -1,7 +1,13 @@
 package com.vgb;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import com.vgb.database_factories.ConnectionFactory;
+import com.vgb.database_factories.PersonFactory;
 
 /**
  * This is a collection of utility methods that define a general API for
@@ -26,7 +32,22 @@ public class InvoiceData {
 	 * @param phone
 	 */
 	public static void addPerson(UUID personUuid, String firstName, String lastName, String phone) {
-		//TODO: implement
+		String query = "insert into Person(uuid, firstName, lastName, phoneNumber) values (?, ?, ?, ?);";
+		
+		try (
+			Connection connection = ConnectionFactory.connect();
+			PreparedStatement statement = connection.prepareStatement(query);
+		) {
+			statement.setString(1, personUuid.toString());
+			statement.setString(2, firstName);
+			statement.setString(3, lastName);
+			statement.setString(4, phone);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} 
 	}
 
 	/**
@@ -37,7 +58,27 @@ public class InvoiceData {
 	 * @param email
 	 */
 	public static void addEmail(UUID personUuid, String email) {
-		//TODO: implement
+		String personIdQuery = "select personId from Person where personId = ?;";
+		
+		
+		String query = "insert into Email(personId, email) values (?, ?);";
+				
+		try (
+			Connection connection = ConnectionFactory.connect();
+			PreparedStatement statement = connection.prepareStatement(query);
+		) {
+			
+
+			statement.setString(1, personUuid.toString());
+			statement.setString(2, firstName);
+			statement.setString(3, lastName);
+			statement.setString(4, phone);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			System.err.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} 
 	}
 
 

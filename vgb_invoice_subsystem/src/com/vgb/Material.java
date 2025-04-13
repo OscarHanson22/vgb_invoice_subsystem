@@ -7,7 +7,7 @@ public class Material extends Item {
 	public static final double TAX_RATE = 0.0715;
 	private String unit;
 	private double costPerUnit;
-	private int x;
+	private int quantity;
 	
 	// Creates and returns a Material from the given information. 
 	public Material(UUID uuid, String name, String unit, double costPerUnit) {
