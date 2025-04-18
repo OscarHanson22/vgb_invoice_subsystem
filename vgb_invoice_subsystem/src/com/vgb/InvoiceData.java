@@ -42,7 +42,11 @@ public class InvoiceData {
 			statement.setString(2, firstName);
 			statement.setString(3, lastName);
 			statement.setString(4, phone);
-			statement.executeUpdate();
+			int rowsAffected = statement.executeUpdate();
+			
+			if (rowsAffected != 1) {
+				throw new RuntimeException("Person with uuid: \"" + personUuid + "\" was not inserted into the database. " + rowsAffected + " rows were affected.");
+			}
 		} catch (SQLException e) {
 			System.err.println("SQLException: ");
 			e.printStackTrace();
@@ -57,31 +61,27 @@ public class InvoiceData {
 	 * @param personUuid
 	 * @param email
 	 */
-	public static void addEmail(UUID personUuid, String email) {
-		String personIdQuery = "select personId from Person where personId = ?;";
-		
-		
+	public static void addEmail(UUID personUuid, String email) {		
 		String query = "insert into Email(personId, email) values (?, ?);";
 				
 		try (
 			Connection connection = ConnectionFactory.connect();
 			PreparedStatement statement = connection.prepareStatement(query);
 		) {
+			int personId = PersonFactory.getId(connection, personUuid);
+			statement.setInt(1, personId);
+			statement.setString(2, email);
+			int rowsAffected = statement.executeUpdate();
 			
-
-			statement.setString(1, personUuid.toString());
-			statement.setString(2, firstName);
-			statement.setString(3, lastName);
-			statement.setString(4, phone);
-			statement.executeUpdate();
+			if (rowsAffected != 1) {
+				throw new RuntimeException("Email: \"" + email + "\" was not inserted into the database. " + rowsAffected + " rows were affected.");
+			}
 		} catch (SQLException e) {
 			System.err.println("SQLException: ");
 			e.printStackTrace();
 			throw new RuntimeException(e);
 		} 
 	}
-
-
 
 	/**
 	 * Adds a company record to the database with the primary contact person identified by the
@@ -97,7 +97,28 @@ public class InvoiceData {
 	 */
 	public static void addCompany(UUID companyUuid, UUID contactUuid, String name, String street, String city, String state,
 			String zip) {
-		//TODO: implement
+		String query = "insert into Company(uuid, contactId, name, addressId) values (?, ?, ?, ?);";
+		
+		try (
+			Connection connection = ConnectionFactory.connect();
+			PreparedStatement statement = connection.prepareStatement(query);
+		) {
+			statement.setString(1, companyUuid.toString());
+			int personId = PersonFactory.getId(connection, contactUuid);
+			statement.setInt(2, personId);
+			statement.setString(3, name);
+			int addressId = AddressAdder.addAddress(connection, street, city, state, zip);
+			statement.setInt(4, addressId);
+			int rowsAffected = statement.executeUpdate();
+			
+			if (rowsAffected != 1) {
+				throw new RuntimeException("Company with uuid: \"" + companyUuid + "\" was not inserted into the database. " + rowsAffected + " rows were affected.");
+			}
+		} catch (SQLException e) {
+			System.err.println("SQLException: ");
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		} 
 	}
 
 	/**

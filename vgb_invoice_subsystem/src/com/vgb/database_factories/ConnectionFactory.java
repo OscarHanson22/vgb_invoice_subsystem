@@ -4,7 +4,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/**
+ * A class that abstracts the creation of database connections. 
+ */
 public class ConnectionFactory {
+    private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
+    
+    /**
+     * Holds information needed to connect to the MySQL invoicing database.
+     */
 	public class DatabaseInfo {
 		public static final String USERNAME = "ohanson5";
 		public static final String PASSWORD = "UXied8jeeXee";
@@ -13,7 +24,19 @@ public class ConnectionFactory {
 		public static final String URL = String.format("jdbc:mysql://%s/%s?%s", SERVER, USERNAME, PARAMETERS);
 	}
 	
-	public static Connection connect() throws SQLException {
-		return DriverManager.getConnection(DatabaseInfo.URL, DatabaseInfo.USERNAME, DatabaseInfo.PASSWORD);
+	/**
+	 * Returns a connection to the invoicing database.
+	 */
+	public static Connection connect() {
+		Connection connection = null;	
+		
+		try {
+			connection = DriverManager.getConnection(DatabaseInfo.URL, DatabaseInfo.USERNAME, DatabaseInfo.PASSWORD);
+		} catch (SQLException e) {
+			logger.error("SQLException encountered while connecting to the database.");
+			throw new RuntimeException(e);
+		}
+		
+		return connection;
 	}
 }
