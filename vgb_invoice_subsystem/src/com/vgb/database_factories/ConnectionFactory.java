@@ -11,7 +11,17 @@ import org.apache.logging.log4j.Logger;
  * A class that abstracts the creation of database connections. 
  */
 public class ConnectionFactory {
+	static final Connection conn;
     private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
+
+	static {
+		try {
+			connection = DriverManager.getConnection(DatabaseInfo.URL, DatabaseInfo.USERNAME, DatabaseInfo.PASSWORD);
+		} catch (SQLException e) {
+			logger.error("SQLException encountered while connecting to the database.");
+			throw new RuntimeException(e);
+		}
+	}
     
     /**
      * Holds information needed to connect to the MySQL invoicing database.
@@ -28,15 +38,10 @@ public class ConnectionFactory {
 	 * Returns a connection to the invoicing database.
 	 */
 	public static Connection connect() {
-		Connection connection = null;	
-		
-		try {
-			connection = DriverManager.getConnection(DatabaseInfo.URL, DatabaseInfo.USERNAME, DatabaseInfo.PASSWORD);
-		} catch (SQLException e) {
-			logger.error("SQLException encountered while connecting to the database.");
-			throw new RuntimeException(e);
-		}
-		
-		return connection;
+		return conn;
+	}
+
+	public static void closeConnection() {
+		conn.close();
 	}
 }
