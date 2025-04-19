@@ -7,12 +7,18 @@ import java.util.UUID;
 
 public class DataConverter {
 	public static void main(String[] args) {
-		private static final String INPUT_DIR = "data/";
-	    private static final String OUTPUT_DIR = "output/";
-	    
-	    private static final String PERSONS_CSV = INPUT_DIR + "Persons.csv";
-	    private static final String COMPANIES_CSV = INPUT_DIR + "Companies.csv";
-	    private static final String ITEMS_CSV = INPUT_DIR + "Items.csv";
+        // Parse people (returns Map, casted to HashMap)
+        HashMap<UUID, Person> personMap = new HashMap<>(Parser.parsePeople("data/Persons.csv"));
+
+        // Parse companies using the person map
+        HashMap<UUID, Company> companyMap = new HashMap<>(Parser.parseCompanies("data/Companies.csv", personMap));
+
+        HashMap<UUID, Item> itemMap = new HashMap<>(Parser.parseItems("data/Items.csv", companyMap));
+        List<Item> items = new ArrayList<>(itemMap.values());
+
+        // Convert maps to lists
+        List<Person> people = new ArrayList<>(personMap.values());
+        List<Company> companies = new ArrayList<>(companyMap.values());
 
 		ToJSON JSONFormatter = new ToJSON();
 		ToXML XMLFormatter = new ToXML();

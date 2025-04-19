@@ -210,7 +210,7 @@ public abstract class Parser {
 						break;
 					case "L":
 						LocalDate startDate = LocalDate.parse(splitLine[3]);
-						LocalDate endDate = LocalDate.parse(splitLine[3]);
+						LocalDate endDate = LocalDate.parse(splitLine[4]);
 						item = new EquipmentLease(equipment, startDate, endDate);
 						break;
 					default: 
