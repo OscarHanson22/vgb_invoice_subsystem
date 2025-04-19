@@ -1,12 +1,24 @@
 package com.vgb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class DataConverter {
 	public static void main(String[] args) {
-		List<Person> people = Parser.parsePeople("data/Persons.csv");
-		List<Company> companies = Parser.parseCompanies("data/Companies.csv");
-		List<Item> items = Parser.parseItems("data/Items.csv");
+        // Parse people (returns Map, casted to HashMap)
+        HashMap<UUID, Person> personMap = new HashMap<>(Parser.parsePeople("data/Persons.csv"));
+
+        // Parse companies using the person map
+        HashMap<UUID, Company> companyMap = new HashMap<>(Parser.parseCompanies("data/Companies.csv", personMap));
+
+        HashMap<UUID, Item> itemMap = new HashMap<>(Parser.parseItems("data/Items.csv", companyMap));
+        List<Item> items = new ArrayList<>(itemMap.values());
+
+        // Convert maps to lists
+        List<Person> people = new ArrayList<>(personMap.values());
+        List<Company> companies = new ArrayList<>(companyMap.values());
 
 		ToJSON JSONFormatter = new ToJSON();
 		ToXML XMLFormatter = new ToXML();
