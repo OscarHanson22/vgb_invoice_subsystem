@@ -1,12 +1,18 @@
 package com.vgb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class DataConverter {
 	public static void main(String[] args) {
-		List<Person> people = Parser.parsePeople("data/Persons.csv");
-		List<Company> companies = Parser.parseCompanies("data/Companies.csv");
-		List<Item> items = Parser.parseItems("data/Items.csv");
+		private static final String INPUT_DIR = "data/";
+	    private static final String OUTPUT_DIR = "output/";
+	    
+	    private static final String PERSONS_CSV = INPUT_DIR + "Persons.csv";
+	    private static final String COMPANIES_CSV = INPUT_DIR + "Companies.csv";
+	    private static final String ITEMS_CSV = INPUT_DIR + "Items.csv";
 
 		ToJSON JSONFormatter = new ToJSON();
 		ToXML XMLFormatter = new ToXML();

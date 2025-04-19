@@ -159,7 +159,7 @@ public abstract class Parser {
 			UUID uuid = UUID.fromString(splitLine[0]);
 			UUID customerUuid = UUID.fromString(splitLine[1]);
 			UUID salespersonUuid = UUID.fromString(splitLine[2]);
-			String date = splitLine[3];
+			LocalDate date = LocalDate.parse(splitLine[3]);
 			
 			Company customer = withCompanies.get(customerUuid);
 			if (customer == null) {
@@ -245,3 +245,4 @@ public abstract class Parser {
 		return invoices;
 	}
 }
+
