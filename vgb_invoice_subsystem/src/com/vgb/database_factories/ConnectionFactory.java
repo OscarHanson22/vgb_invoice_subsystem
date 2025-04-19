@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
  * A class that abstracts the creation of database connections. 
  */
 public class ConnectionFactory {
-	static final Connection conn;
     private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
+	static final Connection connection;
 
 	static {
 		try {
@@ -35,13 +35,21 @@ public class ConnectionFactory {
 	}
 	
 	/**
-	 * Returns a connection to the invoicing database.
+	 * Returns the connection to the invoicing database.
 	 */
-	public static Connection connect() {
-		return conn;
+	public static Connection getConnection() {
+		return connection;
 	}
 
+	/** 
+	 * Closes the connection to the invoicing database.
+	 */
 	public static void closeConnection() {
-		conn.close();
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			logger.error("SQLException encountered while closing the database.");
+			throw new RuntimeException(e);
+		}
 	}
 }

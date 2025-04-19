@@ -5,16 +5,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.vgb.database_factories.ConnectionFactory;
+import com.vgb.database_factories.InvoiceFactory;
+
+/**
+ * Generates and prints various types of reports for the invoicing subsystem.
+ */
 public class InvoiceReport {
+	/**
+	 * Prints reports about the invoicing subsystem.
+	 */
 	public static void main(String[] args) {
-		InvoiceSubsystem invoiceSubsystem = new InvoiceSubsystem("data/Persons.csv", "data/Companies.csv", "data/Items.csv", "data/Invoices.csv");
-		List<Invoice> invoices = invoiceSubsystem.addInvoiceItems("data/InvoiceItems.csv");
-		
+		List<Invoice> invoices = InvoiceFactory.loadAllInvoices(ConnectionFactory.getConnection());
 		System.out.println(customersSummary(invoices) + "\n\n");
 		System.out.println(customersSummary(invoices) + "\n\n");
 		System.out.println(detailedInvoicesSummary(invoices) + "\n\n");
 	}
 
+	/**
+	 * Generates and returns a report about the customers registered in the invoicing subsystem.
+	 * 
+	 * @param invoices The list of invoices the report should cover.
+	 */
 	public static String customersSummary(List<Invoice> invoices) {
 		Total total = Total.empty();
 		int totalAmountOfInvoices = 0;
@@ -70,6 +82,11 @@ public class InvoiceReport {
 		return companiesStringBuilder.toString();
     }
     
+	/**
+	 * Generates and returns a detailed report of all invoices in the invoicing subsystem.
+	 * 
+	 * @param invoices The list of invoices the report should cover.
+	 */
 	public static String detailedInvoicesSummary(List<Invoice> invoices) {
 		StringBuilder invoicesStringBuilder = new StringBuilder();
 		
@@ -84,6 +101,11 @@ public class InvoiceReport {
         return invoicesStringBuilder.toString();
     }
 	
+	/**
+	 * Generates and returns a summary report of all invoices in the invoicing subsystem.
+	 * 
+	 * @param invoices The list of invoices the report should cover.
+	 */
 	public static String invoicesSummary(List<Invoice> invoices) {
 		Total total = Total.empty();
 		int totalAmountOfItems = 0;

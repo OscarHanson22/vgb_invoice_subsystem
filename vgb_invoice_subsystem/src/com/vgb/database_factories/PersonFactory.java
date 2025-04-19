@@ -162,7 +162,7 @@ public class PersonFactory {
 	}
 	
 	public static void main(String[] args) {
-		Connection connection = ConnectionFactory.connect();
+		Connection connection = ConnectionFactory.getConnection();
 		
 		System.out.println("Hello world!");
 		
