@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -67,20 +68,19 @@ public class PersonFactory {
      * Gets the personId of a person with the specified UUID.
      * 
      * @param connection The connection to the database. 
-     * @param uuid The uuid column value of the Person in the database table.
+     * @param uuid The uuid column value of the Person table in the database.
      */
-	public static int getId(Connection connection, UUID uuid) {		
-		int personId = 0;
+	public static Optional<Integer> getId(Connection connection, UUID uuid) {		
+		Optional<Integer> personId = Optional.empty();
 		String query = "select personId from Person where uuid = ?;";
 		
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, uuid.toString());
 			ResultSet results = statement.executeQuery();
 			if (results.next()) {
-				personId = results.getInt("personId");
+				personId = Optional.of(results.getInt("personId"));
 			} else {
-				logger.error("Person with UUID: \"" + uuid + "\" not found in the database.");
-				throw new IllegalStateException("Person with UUID: \"" + uuid + "\" not found in the database.");
+				logger.info("Person with UUID: \"" + uuid + "\" not found in the database.");
 			}
 		} catch (SQLException e) {
 			logger.error("SQLException encountered while getting personId for person with UUID: \"" + uuid + "\".");
@@ -159,41 +159,5 @@ public class PersonFactory {
 		}
 			
 		return people;
-	}
-	
-	public static void main(String[] args) {
-		Connection connection = ConnectionFactory.getConnection();
-		
-		System.out.println("Hello world!");
-		
-		List<Person> people = PersonFactory.loadAllPeople(connection);
-		Person person = PersonFactory.loadPerson(connection, 5);
-
-		System.out.println(people);
-//		
-//		
-//		List<Company> companies = CompanyFactory.loadAllCompanies(connection);
-//		
-//		System.out.println(companies);
-//		
-//		Company company = CompanyFactory.loadCompany(connection, 1);
-//		System.out.println(company);
-//		
-//		
-//		List<Invoice> invoices = InvoiceFactory.loadAllInvoices(connection);
-//		System.out.println(invoices);
-//		
-//		Invoice invoice = InvoiceFactory.loadInvoice(connection, 5);
-//		System.out.println(invoice);
-//		
-//		Address address = AddressFactory.loadAddress(connection, 1);
-//		System.out.println(address);
-//		
-//		Item item = ItemFactory.loadItem(connection, 2);
-//		System.out.println(item);
-//		logger.info("This is an info message.");
-//		logger.debug("This is a debug message.");
-//		logger.warn("This is a warning.");
-//		logger.error("This is an error.");
 	}
 }

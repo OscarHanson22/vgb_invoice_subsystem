@@ -14,6 +14,7 @@ public class ConnectionFactory {
     private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
 	static final Connection connection;
 
+	// initialize the connection to the database
 	static {
 		try {
 			connection = DriverManager.getConnection(DatabaseInfo.URL, DatabaseInfo.USERNAME, DatabaseInfo.PASSWORD);
@@ -21,6 +22,7 @@ public class ConnectionFactory {
 			logger.error("SQLException encountered while connecting to the database.");
 			throw new RuntimeException(e);
 		}
+		logger.info("Successfully connected to the database.");
 	}
     
     /**
@@ -51,5 +53,6 @@ public class ConnectionFactory {
 			logger.error("SQLException encountered while closing the database.");
 			throw new RuntimeException(e);
 		}
+		logger.info("Connection to database successfully closed.");
 	}
 }

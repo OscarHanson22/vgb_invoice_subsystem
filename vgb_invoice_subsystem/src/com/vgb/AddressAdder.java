@@ -15,26 +15,39 @@ public class AddressAdder {
 	
 	public static int addAddress(Connection connection, String street, String city, String state, String zip) {
 		int addressId = 0;
-		int stateId = StateAdder.addState(connection, state);
-		int zipId = ZipcodeAdder.addZipcode(connection, zip, stateId);
 		
-		logger.debug("About to insert into Address.");
+		int stateId = 0;
+		Optional<Integer> foundStateId = StateFinder.findState(connection, state);
+		if (foundStateId.isEmpty()) {
+			stateId = StateAdder.addState(connection, state);
+		} else {
+			stateId = foundStateId.get();
+		}
+		
+		int zipId = 0;
+		Optional<Integer> foundZipId = ZipcodeFinder.findZipcode(connection, zip);
+		if (foundZipId.isEmpty()) {
+			zipId = ZipcodeAdder.addZipcode(connection, zip, stateId);
+		} else {
+			zipId = foundZipId.get();
+		}
+				
 		String query = "insert into Address(street, city, zipcodeId) values (?, ?, ?);";
 		
 		try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			statement.setString(1, street);
 			statement.setString(2, city);
-			statement.setInt(2, zipId);
+			statement.setInt(3, zipId);
 			statement.executeUpdate();
 			ResultSet key = statement.getGeneratedKeys();
 			if (key.next()) {
 				addressId = key.getInt(1);
 			} else {
+				logger.error("Address: \"" + street + ", " + city + ", " + state + ", " + zip + "\" could not be inserted into the database.");
 				throw new RuntimeException("Address: \"" + street + ", " + city + ", " + state + ", " + zip + "\" could not be inserted into the database.");
 			}
 		} catch (SQLException e) {
-			System.err.println("SQLException: ");
-			e.printStackTrace();
+			logger.error("SQLException while adding address: \"" + street + ", " + city + ", " + state + ", " + zip + "\" to the database.");
 			throw new RuntimeException(e);
 		} 
 		

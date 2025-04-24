@@ -1,10 +1,16 @@
 package com.vgb;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
+import com.vgb.database_factories.CompanyFactory;
 import com.vgb.database_factories.ConnectionFactory;
 import com.vgb.database_factories.InvoiceFactory;
 
@@ -16,10 +22,13 @@ public class InvoiceReport {
 	 * Prints reports about the invoicing subsystem.
 	 */
 	public static void main(String[] args) {
-		List<Invoice> invoices = InvoiceFactory.loadAllInvoices(ConnectionFactory.getConnection());
-		System.out.println(customersSummary(invoices) + "\n\n");
-		System.out.println(customersSummary(invoices) + "\n\n");
+		Connection connection = ConnectionFactory.getConnection();		
+		List<Invoice> invoices = InvoiceFactory.loadAllInvoices(connection);
+		List<Company> companies = CompanyFactory.loadAllCompanies(connection);
+		System.out.println(customersSummary(companies, invoices) + "\n\n");
+		System.out.println(invoicesSummary(invoices) + "\n\n");
 		System.out.println(detailedInvoicesSummary(invoices) + "\n\n");
+		ConnectionFactory.closeConnection();
 	}
 
 	/**
@@ -27,59 +36,50 @@ public class InvoiceReport {
 	 * 
 	 * @param invoices The list of invoices the report should cover.
 	 */
-	public static String customersSummary(List<Invoice> invoices) {
+	public static String customersSummary(List<Company> customers, List<Invoice> invoices) {
 		Total total = Total.empty();
 		int totalAmountOfInvoices = 0;
+				
+		Map<String, List<Invoice>> customersAndInvoices = new HashMap<>();
 		
-		StringBuilder companiesStringBuilder = new StringBuilder();
+		for (Company customer : customers) {
+			customersAndInvoices.put(customer.getName(), new ArrayList<Invoice>());
+		}
 		
-		companiesStringBuilder.append("Company Invoice Summary Report\n\n");
-			
-		Map<String, Total> customerTotals = new HashMap<>();
-		Map<String, Integer> customerInvoiceAmount = new HashMap<>();
-	        
+		
 		for (Invoice invoice : invoices) {
-	    	String customerName = invoice.getCustomer().getName();
-	    	customerTotals.putIfAbsent(customerName, Total.empty());
-	    	Total customerTotal = customerTotals.get(customerName);	    	
-	    	customerTotal.add(invoice.getTotal());
-	    	customerTotals.put(customerName, customerTotal);
-	    	customerInvoiceAmount.putIfAbsent(customerName, 0);
-	    	customerInvoiceAmount.put(customerName, customerInvoiceAmount.get(customerName) + 1);
-	    }
+			List<Invoice> customerInvoices = customersAndInvoices.get(invoice.getCustomer().getName());
+			if (customerInvoices == null) {
+				System.err.println("Company: \"" + invoice.getCustomer() + "\" not found in companies.");
+				throw new IllegalStateException("Unknown company found in invoice.");
+			}
+			customerInvoices.add(invoice);
+		}
+				
+		StringBuilder companiesSB = new StringBuilder();
+		companiesSB.append("Company Invoice Summary Report\n\n");
 		
-		Iterator<Map.Entry<String, Total>> totals = customerTotals.entrySet().iterator();
-		Iterator<Map.Entry<String, Integer>> amountOfInvoices = customerInvoiceAmount.entrySet().iterator();
-
-		// Iterate over both `customerTotals` and `amountOfInvoices`
-        while (totals.hasNext() && amountOfInvoices.hasNext()) {
-        	String customerName = null;
-        	Total customerTotal = Total.empty();
-        	int customerAmountOfInvoices = 0;
-        	
-            if (totals.hasNext()) {
-                Map.Entry<String, Total> nameAndTotal = totals.next();
-                customerName = nameAndTotal.getKey();
-                customerTotal = nameAndTotal.getValue();
-            }
-
-            if (amountOfInvoices.hasNext()) {
-                Map.Entry<String, Integer> nameAndAmountOfInvoices = amountOfInvoices.next();
-                customerAmountOfInvoices = nameAndAmountOfInvoices.getValue();
-            }
-            
-            companiesStringBuilder.append("Customer: " + customerName + "\n");
-	    	companiesStringBuilder.append("Number of Invoices: " + customerAmountOfInvoices + "\n");
-	    	companiesStringBuilder.append("Grand Total: $" + String.format("%.2f", customerTotal.getTotal()) + "\n\n");
-	    	
-	    	totalAmountOfInvoices += customerAmountOfInvoices;
-	    	total.add(customerTotal);
-        }
+		customers.sort(Comparator.comparing(Company::getName));
+		
+		for (Company customer : customers) {
+			List<Invoice> customerInvoices = customersAndInvoices.get(customer.getName());
+			int amountOfInvoices = customerInvoices.size();
+			Total customerTotal = Total.empty();
+			for (Invoice invoice : customerInvoices) {
+				customerTotal.add(invoice.getTotal());
+			}
+			total.add(customerTotal);
+			totalAmountOfInvoices += amountOfInvoices;
+			
+			companiesSB.append("Customer: " + customer.getName() + "\n");
+			companiesSB.append("Amount of Invoices: " + amountOfInvoices + "\n");
+			companiesSB.append(customerTotal + "\n\n");
+		}
 	    
-	    companiesStringBuilder.append("Total Number of Invoices: " + totalAmountOfInvoices + "\n");
-		companiesStringBuilder.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
+		companiesSB.append("Total Number of Invoices: " + totalAmountOfInvoices + "\n");
+	    companiesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
 	    
-		return companiesStringBuilder.toString();
+		return companiesSB.toString();
     }
     
 	/**
@@ -88,17 +88,28 @@ public class InvoiceReport {
 	 * @param invoices The list of invoices the report should cover.
 	 */
 	public static String detailedInvoicesSummary(List<Invoice> invoices) {
-		StringBuilder invoicesStringBuilder = new StringBuilder();
+		invoices.sort(Comparator.comparing(Invoice::getTotalValue).reversed());
 		
-		invoicesStringBuilder.append("Detailed Summary Report \n\n");
+		Total total = Total.empty();
+		int totalAmountOfItems = 0;
+		StringBuilder invoicesSB = new StringBuilder();
+		invoicesSB.append("Summary Report | By Total\n\n");
+		
+		invoicesSB.append("Detailed Summary Report \n\n");
 		
         for (Invoice invoice : invoices) {
-        	invoicesStringBuilder.append(invoice);
-        	invoicesStringBuilder.append(invoice.getTotal() + "\n\n");
+        	invoicesSB.append(invoice);
+        	invoicesSB.append("\n");
+        	total.add(invoice.getTotal());
+        	totalAmountOfItems += invoice.getItems().size();
         }
         
+        invoicesSB.append("Total Number of Items: " + totalAmountOfItems + "\n");
+        invoicesSB.append("Subtotal: $" + String.format("%.2f", total.getCost()) + "\n");
+        invoicesSB.append("Tax Total: $" + String.format("%.2f", total.getTax()) + "\n");
+        invoicesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
         
-        return invoicesStringBuilder.toString();
+        return invoicesSB.toString();
     }
 	
 	/**
@@ -107,31 +118,24 @@ public class InvoiceReport {
 	 * @param invoices The list of invoices the report should cover.
 	 */
 	public static String invoicesSummary(List<Invoice> invoices) {
+		invoices.sort(Comparator.comparing(Invoice::getTotalValue).reversed());
+
 		Total total = Total.empty();
 		int totalAmountOfItems = 0;
-		
-		StringBuilder invoicesStringBuilder = new StringBuilder();
-		
-		invoicesStringBuilder.append("Summary Report | By Total\n\n");
+		StringBuilder invoicesSB = new StringBuilder();
+		invoicesSB.append("Summary Report | By Total\n\n");
 		
 		for (Invoice invoice : invoices) {
-			int amountOfItems = invoice.getItems().size();
-			
-			invoicesStringBuilder.append("Invoice UUID: " + invoice.getUuid() + "\n");
-			invoicesStringBuilder.append("Customer: " + invoice.getCustomer().getName() + "\n");
-			invoicesStringBuilder.append("Sold by: " + invoice.getSalesperson() + "\n");
-			invoicesStringBuilder.append("Number of Items: " + amountOfItems + "\n");
-			invoicesStringBuilder.append(invoice.getTotal() + "\n\n");
-			
+			invoicesSB.append(invoice.summary());
 			total.add(invoice.getTotal());
-			totalAmountOfItems += amountOfItems;
+			totalAmountOfItems += invoice.getItems().size();
 		}
 		
-		invoicesStringBuilder.append("Total Number of Items: " + totalAmountOfItems + "\n");
-		invoicesStringBuilder.append("Subtotal: $" + total.getCost() + "\n");
-		invoicesStringBuilder.append("Tax Total: $" + Round.toCents(total.getTax()) + "\n");
-		invoicesStringBuilder.append("Grand Total: $" + total.getTotal() + "\n");
+		invoicesSB.append("Total Number of Items: " + totalAmountOfItems + "\n");
+        invoicesSB.append("Subtotal: $" + String.format("%.2f", total.getCost()) + "\n");
+        invoicesSB.append("Tax Total: $" + String.format("%.2f", total.getTax()) + "\n");
+        invoicesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
 	
-		return invoicesStringBuilder.toString();
+		return invoicesSB.toString();
 	}
 }

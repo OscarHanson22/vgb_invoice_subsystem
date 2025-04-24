@@ -32,4 +32,9 @@ public class EquipmentLease extends Equipment {
 		
 		return new Total(cost, tax);
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString() + " | Leased from: " + startDate.toString() + " to " + endDate.toString() + " | " + getTotal();
+	}
 }

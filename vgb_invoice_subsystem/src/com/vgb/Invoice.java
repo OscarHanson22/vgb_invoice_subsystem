@@ -60,17 +60,54 @@ public class Invoice extends Identifiable {
 		return total.getTotal();
 	}
 	
+	// Returns the Total (subtotal and tax) represented by this invoice. 
 	public Total getTotal() {
 		return total;
+	}
+	
+	// Returns the value of the total (used for sorting).
+	public double getTotalValue() {
+		return total.getTotal();
+	}
+	
+	/**
+	 * Returns a summary of the invoice.
+	 */
+	public String summary() {
+		StringBuilder invoiceSB = new StringBuilder();
+		invoiceSB.append("Invoice UUID: " + getUuid() + "\n");
+		invoiceSB.append("Date: " + date + "\n");
+		invoiceSB.append("Customer: " + customer.getName() + "\n");
+		invoiceSB.append("Sold by: " + salesperson.getFullName() + "\n");
+		invoiceSB.append("Number of Items: " + items.size() + "\n");
+		invoiceSB.append(total + "\n\n");
+		return invoiceSB.toString();
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder invoiceSB = new StringBuilder();
-		invoiceSB.append("Invoice UUID: " + this.getUuid() + " Date: " + date + "\nCustomer: " + customer + "\nSalesperson: " + salesperson + "\nItems (" + items.size() + "):\n");
-		for (Item item : items) {
-			invoiceSB.append(" - " + item + "\n");
+		Total total = Total.empty();
+		
+		invoiceSB.append(
+			"Invoice UUID: " + this.getUuid() + " | Date: " + date + 
+			"\nCustomer: " + customer + 
+			"\nSalesperson: " + salesperson
+		);
+		
+		if (items.size() > 0) {
+			invoiceSB.append("\nItems (" + items.size() + "):\n");
+			
+			for (Item item : items) {
+				invoiceSB.append(" - " + item + "\n");
+				total.add(item.getTotal());
+			}
+		} else {
+			invoiceSB.append("\nNo items on invoice.\n");
 		}
+		
+		invoiceSB.append(total + "\n");
+		
 		return invoiceSB.toString();
 	}
 }

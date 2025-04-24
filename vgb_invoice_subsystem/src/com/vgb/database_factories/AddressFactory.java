@@ -5,9 +5,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.vgb.Address;
 
+/**
+ * A class that loads Address information from the invoicing database.
+ */
 public class AddressFactory {
+    private static final Logger logger = LogManager.getLogger(AddressFactory.class);
+
+    /**
+     * Loads an Address object from the Address table of the database.
+     * 
+     * @param connection The connection to the database.
+     * @param addressId The addressId of the specified address in the database.
+     */
 	public static Address loadAddress(Connection connection, int addressId) {
 		Address address = null;
 		
@@ -27,11 +41,11 @@ public class AddressFactory {
 				String zip = results.getString("zipcode");
 				address = new Address(street, city, state, zip);				
 			} else {
+				logger.error("Address with addressId: " + addressId + " not found in the database.");
 				throw new IllegalStateException("Address with addressId: " + addressId + " not found in the database.");
 			}
 		} catch (SQLException e) {
-			System.err.println("SQLException: ");
-			e.printStackTrace();
+			logger.error("SQLException encountered while loading address with with addressId: " + addressId + " from the database.");
 			throw new RuntimeException(e);
 		}
 		
