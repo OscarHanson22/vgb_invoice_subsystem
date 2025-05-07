@@ -1,14 +1,11 @@
 package com.vgb;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.vgb.database_factories.CompanyFactory;
 import com.vgb.database_factories.ConnectionFactory;

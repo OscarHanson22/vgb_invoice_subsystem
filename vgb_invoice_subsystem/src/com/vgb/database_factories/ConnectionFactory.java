@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class ConnectionFactory {
     private static final Logger logger = LogManager.getLogger(ConnectionFactory.class);
-	static final Connection connection;
+	private static final Connection connection;
 
 	// initialize the connection to the database
 	static {

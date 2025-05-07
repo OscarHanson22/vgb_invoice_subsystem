@@ -44,19 +44,9 @@ public class InvoiceData {
 		logger.info("Database successfully cleared.");
 		logger.warn("Database cleared.");
 	}
-	
-//	drop table if exists InvoiceItem;
-//	drop table if exists Invoice;
-//	drop table if exists Item;
-//	drop table if exists Company;
-//	drop table if exists Email;
-//	drop table if exists Person;
-//	drop table if exists Address;
-//	drop table if exists Zipcode;
-//	drop table if exists State;
 
 	/**
-	 * Method to add a person record to the database with the provided data.
+	 * Method to add a person record to the database with the provided data. 
 	 *
 	 * @param personUuid
 	 * @param firstName
@@ -64,8 +54,35 @@ public class InvoiceData {
 	 * @param phone
 	 )*/
 	public static void addPerson(UUID personUuid, String firstName, String lastName, String phone) {
-		logger.warn("Adding person: " + firstName + " " + lastName + " with UUID: \"" + personUuid + "\".");
-
+		if (personUuid == null) {
+			logger.warn("Cannot add a person with a null UUID to the database. No changes made to the database.");
+			return;
+		} 
+		
+		if (firstName == null) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with a null first name to the database. No changes made to the database.");
+			return;
+		} else if (firstName.isEmpty()) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with an empty first name to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (lastName == null) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with a null last name to the database. No changes made to the database.");
+			return;
+		} else if (lastName.isEmpty()) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with an empty last name to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (phone == null) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with a null phone number to the database. No changes made to the database.");
+			return;
+		} else if (phone.isEmpty()) {
+			logger.warn("Cannot add a person (UUID: \"" + personUuid + "\") with an empty phone number to the database. No changes made to the database.");
+			return;
+		}
+		
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "insert into Person(uuid, firstName, lastName, phoneNumber) values (?, ?, ?, ?);";
 		
@@ -92,16 +109,17 @@ public class InvoiceData {
 	 * @param personUuid
 	 * @param email
 	 */
-	public static void addEmail(UUID personUuid, String email) {
-		logger.warn("Adding email: \"" + email + "\" to person with UUID: \"" + personUuid + "\".");
-		
-		if (email == null) {
-			logger.warn("Cannot add null email to person with UUID: \"" + personUuid + "\". No changes made to database.");
+	public static void addEmail(UUID personUuid, String email) {		
+		if (personUuid == null) {
+			logger.warn("Cannot add email: \"" + email + "\" to the person with UUID: \"" + personUuid + "\". No changes made to the database.");
 			return;
 		}
 		
-		if (email.isEmpty()) {
-			logger.warn("Cannot add empty email to person with UUID: \"" + personUuid + "\". No changes made to the database.");
+		if (email == null) {
+			logger.warn("Cannot add a null email to person with UUID: \"" + personUuid + "\". No changes made to the database.");
+			return;
+		} else if (email.isEmpty()) {
+			logger.warn("Cannot add an empty email to person with UUID: \"" + personUuid + "\". No changes made to the database.");
 			return;
 		}
 		
@@ -145,6 +163,56 @@ public class InvoiceData {
 	 * @param zip
 	 */
 	public static void addCompany(UUID companyUuid, UUID contactUuid, String name, String street, String city, String state, String zip) {
+		if (companyUuid == null) {
+			logger.warn("Cannot add a company with a null UUID to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (contactUuid == null) {
+			logger.warn("Cannot add a company with a null contact UUID to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (name == null) {
+			logger.warn("Cannot add a company with a null name to the database. No changes made to the database.");
+			return;
+		} else if (name.isEmpty()) {
+			logger.warn("Cannot add a company with an empty name to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (street == null) {
+			logger.warn("Cannot add a company with a null street string to the database. No changes made to the database.");
+			return;
+		} else if (street.isEmpty()) {
+			logger.warn("Cannot add a company with an empty street string to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (city == null) {
+			logger.warn("Cannot add a company with a null city string to the database. No changes made to the database.");
+			return;
+		} else if (city.isEmpty()) {
+			logger.warn("Cannot add a company with an empty city string to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (state == null) {
+			logger.warn("Cannot add a company with a null state string to the database. No changes made to the database.");
+			return;
+		} else if (state.isEmpty()) {
+			logger.warn("Cannot add a company with an empty state string to the database. No changes made to the database.");
+			return;
+		}
+		
+		if (zip == null) {
+			logger.warn("Cannot add a company with a null zip string to the database. No changes made to the database.");
+			return;
+		} else if (zip.isEmpty()) {
+			logger.warn("Cannot add a company with an empty zip string to the database. No changes made to the database.");
+			return;
+		}
+		
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int personId = 0;
@@ -184,8 +252,6 @@ public class InvoiceData {
 	 * @param retailPrice
 	 */
 	public static void addEquipment(UUID equipmentUuid, String name, String modelNumber, double retailPrice) {
-		logger.warn("Adding Equipment with UUID: \"" + equipmentUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		String query = "insert into Item(uuid, name, discriminator, equipmentModelNumber, equipmentRetailPrice) values (?, ?, ?, ?, ?);";
 		
@@ -327,8 +393,6 @@ public class InvoiceData {
 	 * @param itemUuid
 	 */
 	public static void addEquipmentPurchaseToInvoice(UUID invoiceUuid, UUID itemUuid) {
-		logger.warn("Adding Equipment purchase with UUID: \"" + itemUuid + "\" to invoice with UUID: \"" + invoiceUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int invoiceId = 0;
@@ -375,8 +439,6 @@ public class InvoiceData {
 	 * @param end
 	 */
 	public static void addEquipmentLeaseToInvoice(UUID invoiceUuid, UUID itemUuid, LocalDate start, LocalDate end) {
-		logger.warn("Adding Equipment lease with UUID: \"" + itemUuid + "\" to invoice with UUID: \"" + invoiceUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int invoiceId = 0;
@@ -428,8 +490,6 @@ public class InvoiceData {
 	 * @param numberOfHours
 	 */
 	public static void addEquipmentRentalToInvoice(UUID invoiceUuid, UUID itemUuid, double numberOfHours) {
-		logger.warn("Adding Equipment rental with UUID: \"" + itemUuid + "\" to invoice with UUID: \"" + invoiceUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int invoiceId = 0;
@@ -449,10 +509,7 @@ public class InvoiceData {
 			logger.warn("Equipment with UUID: \"" + itemUuid + "\" not found while adding equipment rental to invoice with UUID: \"" + invoiceUuid + "\". No changes made to the database.");
 			return;
 		}
-		
-		
-		logger.warn("itemId=" + itemId + " meaning it was found in the database lol.");	
-		
+				
 		Equipment equipment = (Equipment) ItemFactory.loadItem(connection, itemId);
 		
 		String query = "insert into InvoiceItem(invoiceId, itemId, equipmentDiscriminator, rentedHours, rentAmount) values (?, ?, ?, ?, ?);";
@@ -485,8 +542,6 @@ public class InvoiceData {
 	 * @param numberOfUnits
 	 */
 	public static void addMaterialToInvoice(UUID invoiceUuid, UUID itemUuid, int numberOfUnits) {
-		logger.warn("Adding Material with UUID: \"" + itemUuid + "\" to invoice with UUID: \"" + invoiceUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int invoiceId = 0;
@@ -533,8 +588,6 @@ public class InvoiceData {
 	 * @param amount
 	 */
 	public static void addContractToInvoice(UUID invoiceUuid, UUID itemUuid, double amount) {
-		logger.warn("Adding Contract with UUID: \"" + itemUuid + "\" to invoice with UUID: \"" + invoiceUuid + "\".");
-
 		Connection connection = ConnectionFactory.getConnection();
 		
 		int invoiceId = 0;

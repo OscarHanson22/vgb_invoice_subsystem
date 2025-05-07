@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,5 +45,32 @@ public class EmailFactory {
 		}
 		
 		return emails;
+	}
+	
+	public static List<Integer> getIds(Connection connection, UUID personUuid) {
+		List<Integer> ids = new ArrayList<>();
+		
+		String query = 
+			"select emailId from Email email "
+			+ "join Person person on email.personId = person.personId "
+			+ "where person.uuid = ?;";
+		
+		try (PreparedStatement statement = connection.prepareStatement(query)) {
+			statement.setString(1, personUuid.toString());
+			ResultSet results = statement.executeQuery();
+			while (results.next()) {
+				int id = results.getInt("emailId");
+				ids.add(id);
+			}
+		} catch (SQLException e) {
+			logger.error("SQLException encountered while loading emailIds for person with UUID: \"" + personUuid + "\".");
+			throw new RuntimeException(e);
+		}
+		
+		if (ids.size() == 0) {
+			logger.warn("No emails registered for person with UUID: \"" + personUuid + "\".");
+		}
+		
+		return ids;
 	}
 }

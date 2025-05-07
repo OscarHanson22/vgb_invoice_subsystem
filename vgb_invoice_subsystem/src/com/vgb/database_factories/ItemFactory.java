@@ -51,13 +51,18 @@ import com.vgb.Item;
 import com.vgb.Material;
 
 /**
- * A class that loads Item objects from the Item and InvoiceItem tables in the database.
+ * A class that loads Item objects (without invoice information) from the Item table in the database. No data is read from the InvoiceItem table.
  */
 public class ItemFactory {
     private static final Logger logger = LogManager.getLogger(ItemFactory.class);
 	
+    /**
+     * Loads and returns an Item object from the Item table in the database with the specified itemId.
+     * 
+     * @param connection The connection to the database.
+     * @param itemId The itemId of the desired item object in the Item table.
+     */
 	public static Item loadItem(Connection connection, int itemId) {
-		logger.warn("Item with itemId " + itemId + " is about to be loaded.");
 		Item item = null;
 		String uuidString = null; // used for error messaging
 		
@@ -123,17 +128,13 @@ public class ItemFactory {
 	 */
 	public static Optional<Integer> getId(Connection connection, UUID uuid) {
 		Optional<Integer> itemId = Optional.empty();
-		String query = "select itemId, discriminator from Item where uuid = ?;";
+		String query = "select itemId from Item where uuid = ?;";
 		
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
 			statement.setString(1, uuid.toString());
 			ResultSet results = statement.executeQuery();
 			if (results.next()) {
 				itemId = Optional.of(results.getInt("itemId"));
-				String discriminator = results.getString("discriminator");
-				logger.warn("Item discriminator: " + discriminator);
-				logger.warn("itemId found: " + itemId);
-				logger.warn(uuid);
 			} else {
 				logger.warn("Item with UUID: \"" + uuid + "\" not found in the database.");
 			}
@@ -172,19 +173,5 @@ public class ItemFactory {
 		}
 			
 		return items;
-	}
-	
-	public static void main(String[] args) {
-		List<Item> items = loadAllItems(ConnectionFactory.getConnection());
-		
-		for (Item item : items) {
-			System.out.println(item + "\n");
-		}
-		
-		List<Item> invoiceItems = InvoiceItemFactory.loadAllInvoiceItems(ConnectionFactory.getConnection());
-		
-		for (Item item : invoiceItems) {
-			System.out.println(item + "\n");
-		}
 	}
 }

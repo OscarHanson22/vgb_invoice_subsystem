@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vgb.Person;
+import com.vgb.Result;
 
 /**
  * A class that loads Person objects and related information from the Person table in the database.
@@ -28,7 +29,7 @@ public class PersonFactory {
      */
 	public static Person loadPerson(Connection connection, int personId) {
 		if (connection == null) {
-			logger.error("Database connection cannot be null.");
+			logger.error("Cannot load a person with a null database connection.");
 			throw new IllegalArgumentException("Database connection cannot be null.");
 		}
 		
@@ -70,8 +71,19 @@ public class PersonFactory {
      * @param connection The connection to the database. 
      * @param uuid The uuid column value of the Person table in the database.
      */
-	public static Optional<Integer> getId(Connection connection, UUID uuid) {		
+	public static Optional<Integer> getId(Connection connection, UUID uuid) {
 		Optional<Integer> personId = Optional.empty();
+
+		if (connection == null) {
+			logger.warn("Cannot find a person with a null database connection.");
+			return personId;
+		}
+		
+		if (uuid == null) {
+			logger.warn("Cannot find a person with a null UUID.");
+			return personId;
+		}
+		
 		String query = "select personId from Person where uuid = ?;";
 		
 		try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -88,48 +100,6 @@ public class PersonFactory {
 		} 
 			
 		return personId;
-	}
-	
-	/**
-     * Loads a single Person object with the specified uuid from the Person table in the database. 
-     * 
-     * @param connection The connection to the database. 
-     * @param uuid The uuid column value of the Person in the database table.
-     */
-	public static Person loadPerson(Connection connection, UUID uuid) {
-		if (connection == null) {
-			logger.error("Database connection cannot be null.");
-			throw new IllegalArgumentException("Database connection cannot be null.");
-		}
-		
-		if (uuid == null) {
-			logger.error("Person UUID cannot be null.");
-			throw new IllegalArgumentException("Person UUID cannot be null.");
-		}
-		
-		Person person = null;
-		String query = "select personId, uuid, firstName, lastName, phoneNumber from Person where uuid = ?;";
-		
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, uuid.toString());
-			ResultSet results = statement.executeQuery();
-			if (results.next()) {
-				int personId = results.getInt("personId");
-				String firstName = results.getString("firstName");
-				String lastName = results.getString("lastName");
-				String phoneNumber = results.getString("phoneNumber");
-				List<String> emailAddresses = EmailFactory.loadEmails(connection, personId);
-				person = new Person(uuid, firstName, lastName, phoneNumber, emailAddresses);
-			} else {
-				logger.error("Person with UUID: " + uuid + " not found in the database.");
-				throw new IllegalStateException("Person with UUID: " + uuid + " not found in the database.");
-			}
-		} catch (SQLException e) {
-			logger.error("SQLException encountered while loading Person with UUID: \"" + uuid + "\".");
-			throw new RuntimeException(e);
-		} 
-			
-		return person;
 	}
 	
 	/**

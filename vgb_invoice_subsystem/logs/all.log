@@ -1,32 +1,110 @@
-2025-04-23 01:13:11.318 [main] INFO  com.vgb.database_factories.ConnectionFactory - Successfully connected to the database.
-2025-04-23 01:13:11.372 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 117 is about to be loaded.
-2025-04-23 01:13:11.384 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 118 is about to be loaded.
-2025-04-23 01:13:11.392 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 119 is about to be loaded.
-2025-04-23 01:13:11.398 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 120 is about to be loaded.
-2025-04-23 01:13:11.405 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 121 is about to be loaded.
-2025-04-23 01:13:11.410 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 122 is about to be loaded.
-2025-04-23 01:13:11.417 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 123 is about to be loaded.
-2025-04-23 01:13:11.423 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 124 is about to be loaded.
-2025-04-23 01:13:11.428 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 125 is about to be loaded.
-2025-04-23 01:13:11.435 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 126 is about to be loaded.
-2025-04-23 01:13:11.440 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 127 is about to be loaded.
-2025-04-23 01:13:11.446 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 128 is about to be loaded.
-2025-04-23 01:13:11.451 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 129 is about to be loaded.
-2025-04-23 01:13:11.456 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 130 is about to be loaded.
-2025-04-23 01:13:11.462 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 131 is about to be loaded.
-2025-04-23 01:13:11.467 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 132 is about to be loaded.
-2025-04-23 01:13:11.492 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 133 is about to be loaded.
-2025-04-23 01:13:11.497 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 136 is about to be loaded.
-2025-04-23 01:13:11.539 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 137 is about to be loaded.
-2025-04-23 01:13:11.565 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 139 is about to be loaded.
-2025-04-23 01:13:11.602 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 140 is about to be loaded.
-2025-04-23 01:13:11.653 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 134 is about to be loaded.
-2025-04-23 01:13:11.686 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 135 is about to be loaded.
-2025-04-23 01:13:11.724 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 138 is about to be loaded.
-2025-04-23 01:13:11.754 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 141 is about to be loaded.
-2025-04-23 01:13:11.877 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 117 is about to be loaded.
-2025-04-23 01:13:11.895 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 117 is about to be loaded.
-2025-04-23 01:13:11.909 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 118 is about to be loaded.
-2025-04-23 01:13:11.934 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 122 is about to be loaded.
-2025-04-23 01:13:11.950 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 124 is about to be loaded.
-2025-04-23 01:13:11.962 [main] WARN  com.vgb.database_factories.ItemFactory - Item with itemId 134 is about to be loaded.
+2025-04-25 02:40:59.875 [main] INFO  com.vgb.database_factories.ConnectionFactory - Successfully connected to the database.
+2025-04-25 02:40:59.894 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:40:59.896 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:40:59.899 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:40:59.902 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:40:59.905 [main] INFO  com.vgb.InvoiceData - 2 rows cleared from table: Email
+2025-04-25 02:40:59.908 [main] INFO  com.vgb.InvoiceData - 3 rows cleared from table: Person
+2025-04-25 02:40:59.911 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:40:59.913 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:40:59.917 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:40:59.918 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:40:59.918 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:40:59.974 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:40:59.976 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:40:59.979 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:40:59.982 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:40:59.984 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Email
+2025-04-25 02:40:59.987 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Person
+2025-04-25 02:40:59.989 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:40:59.993 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:40:59.995 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:40:59.995 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:40:59.995 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.050 [main] WARN  com.vgb.InvoiceData - Cannot add a person (UUID: "0d3b5a56-d948-4128-b64d-830794fb2679") with a null phone number to the database. No changes made to the database.
+2025-04-25 02:41:00.099 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "0d3b5a56-d948-4128-b64d-830794fb2679" not found in the database.
+2025-04-25 02:41:00.101 [main] WARN  com.vgb.InvoiceData - Person with UUID: "0d3b5a56-d948-4128-b64d-830794fb2679" not found while adding email: "johndow67@aol.com". No changes made to the database.
+2025-04-25 02:41:00.106 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "0d3b5a56-d948-4128-b64d-830794fb2679" not found in the database.
+2025-04-25 02:41:00.107 [main] WARN  com.vgb.InvoiceData - Person with UUID: "0d3b5a56-d948-4128-b64d-830794fb2679" not found while adding email: "johndoebackup@aol.com". No changes made to the database.
+2025-04-25 02:41:00.110 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "0d3b5a56-d948-4128-b64d-830794fb2679" not found in the database.
+2025-04-25 02:41:00.148 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.151 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.156 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.160 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.162 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Email
+2025-04-25 02:41:00.164 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Person
+2025-04-25 02:41:00.168 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.172 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.175 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.175 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.175 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.176 [main] WARN  com.vgb.InvoiceData - Cannot add a person (UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b") with a null last name to the database. No changes made to the database.
+2025-04-25 02:41:00.180 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b" not found in the database.
+2025-04-25 02:41:00.180 [main] WARN  com.vgb.InvoiceData - Person with UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b" not found while adding email: "johndow67@aol.com". No changes made to the database.
+2025-04-25 02:41:00.189 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b" not found in the database.
+2025-04-25 02:41:00.190 [main] WARN  com.vgb.InvoiceData - Person with UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b" not found while adding email: "johndoebackup@aol.com". No changes made to the database.
+2025-04-25 02:41:00.193 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "ef4b9caa-731d-48fd-8ea1-1e4643d0d38b" not found in the database.
+2025-04-25 02:41:00.199 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.202 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.205 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.208 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.210 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Email
+2025-04-25 02:41:00.213 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Person
+2025-04-25 02:41:00.215 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.219 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.222 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.222 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.223 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.225 [main] WARN  com.vgb.InvoiceData - Cannot add a person (UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c") with a null first name to the database. No changes made to the database.
+2025-04-25 02:41:00.228 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c" not found in the database.
+2025-04-25 02:41:00.229 [main] WARN  com.vgb.InvoiceData - Person with UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c" not found while adding email: "johndow67@aol.com". No changes made to the database.
+2025-04-25 02:41:00.232 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c" not found in the database.
+2025-04-25 02:41:00.232 [main] WARN  com.vgb.InvoiceData - Person with UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c" not found while adding email: "johndoebackup@aol.com". No changes made to the database.
+2025-04-25 02:41:00.236 [main] INFO  com.vgb.database_factories.PersonFactory - Person with UUID: "8613c33c-e248-4680-9a5d-32a3afd16a8c" not found in the database.
+2025-04-25 02:41:00.295 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.298 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.300 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.303 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.306 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Email
+2025-04-25 02:41:00.308 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Person
+2025-04-25 02:41:00.310 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.313 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.315 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.315 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.315 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.322 [main] WARN  com.vgb.InvoiceData - Cannot add a null email to person with UUID: "108fcfa2-5545-4945-a2ca-690678edad75". No changes made to database.
+2025-04-25 02:41:00.354 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.357 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.359 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.362 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.364 [main] INFO  com.vgb.InvoiceData - 1 rows cleared from table: Email
+2025-04-25 02:41:00.367 [main] INFO  com.vgb.InvoiceData - 1 rows cleared from table: Person
+2025-04-25 02:41:00.369 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.372 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.374 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.375 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.375 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.391 [main] WARN  com.vgb.InvoiceData - Cannot add a null email to person with UUID: "290e1d9f-9f4e-4430-9e65-e8ff52285b7a". No changes made to database.
+2025-04-25 02:41:00.405 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.407 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.408 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.411 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.414 [main] INFO  com.vgb.InvoiceData - 1 rows cleared from table: Email
+2025-04-25 02:41:00.416 [main] INFO  com.vgb.InvoiceData - 1 rows cleared from table: Person
+2025-04-25 02:41:00.419 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.421 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.424 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.425 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.425 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.461 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: InvoiceItem
+2025-04-25 02:41:00.463 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Invoice
+2025-04-25 02:41:00.466 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Item
+2025-04-25 02:41:00.471 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Company
+2025-04-25 02:41:00.474 [main] INFO  com.vgb.InvoiceData - 2 rows cleared from table: Email
+2025-04-25 02:41:00.476 [main] INFO  com.vgb.InvoiceData - 1 rows cleared from table: Person
+2025-04-25 02:41:00.479 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Address
+2025-04-25 02:41:00.482 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: Zipcode
+2025-04-25 02:41:00.484 [main] INFO  com.vgb.InvoiceData - 0 rows cleared from table: State
+2025-04-25 02:41:00.485 [main] INFO  com.vgb.InvoiceData - Database successfully cleared.
+2025-04-25 02:41:00.485 [main] WARN  com.vgb.InvoiceData - Database cleared.
+2025-04-25 02:41:00.486 [main] WARN  com.vgb.InvoiceData - Cannot add a person with a null UUID to the database. No changes made to the database.

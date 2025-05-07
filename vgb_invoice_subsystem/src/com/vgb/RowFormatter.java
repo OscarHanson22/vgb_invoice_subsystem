@@ -1,22 +1,15 @@
 package com.vgb;
 
-import java.util.List;
-
 public class RowFormatter {
-	private int[] widths;
+	private RowFormat format;
 	private String[] items;
 	
-	public RowFormatter(int[] widths) {	
-		this.widths = widths;
-		this.items = null;
-	}
-	
-	public RowFormatter(RowFormatter formatter, String[] items) {
-		if (formatter.widths.length != items.length) {
-			throw new IllegalArgumentException("The lengths of `formatter.widths` and `items` must be equal: `formatter.widths` length: " + widths.length + ", `items` length: " + items.length + ".");
+	public RowFormatter(RowFormat format, String[] items) {	
+		if (format.columns() != items.length) {
+			throw new IllegalArgumentException("The amount of columns must match the amount of items. Amount of format columns: " + format.columns() + ", Amount of items: " + items.length + ".");
 		}
 		
-		this.widths = formatter.widths;
+		this.format = format;
 		this.items = items;
 	}
 	
@@ -42,8 +35,8 @@ public class RowFormatter {
 		
 		int widthIndex = 0;
 		for (String item : items) {
-			sb.append(formatAndTruncate(item, widths[widthIndex]));
-			sb.append(" | ");
+			sb.append(formatAndTruncate(item, format.width(widthIndex)));
+			sb.append(format.separator());
 			widthIndex++;
 		}
 		
@@ -56,12 +49,12 @@ public class RowFormatter {
 //		for (int i = 1; i < 30; i++) {
 //			System.out.println("|" + formatAndTruncate("1", i) + "|");
 //		}
-		int[] widths = {7, 10, 7, 20};
-		RowFormatter format = new RowFormatter(widths);
+		int[] widths = {14, 15, 7, 20};
+		RowFormat format = new RowFormat(widths, " ");
 		
 		String[] items = {"Something", "Another", "So help us", "God i guess"};
 		System.out.println(new RowFormatter(format, items));
-		String[] items2 = {"else", "maybe this", "is what i", "was looking for"};
+		String[] items2 = {"else", "maybe this isn't what i was looking for", "is what i", "was looking for"};
 		System.out.println(new RowFormatter(format, items2));
 
 	}

@@ -33,8 +33,8 @@ public class InvoiceFactory {
      */
 	public static Invoice loadInvoice(Connection connection, int invoiceId) {
 		Invoice invoice = null;
-		String uuidString = null; // used for error messaging
-		String dateString = null; // used for error messaging
+		String uuidString = null; 
+		String dateString = null; 
 		
 		// first create the invoice
 		String query = "select uuid, customerId, salespersonId, date from Invoice where invoiceId = ?;";

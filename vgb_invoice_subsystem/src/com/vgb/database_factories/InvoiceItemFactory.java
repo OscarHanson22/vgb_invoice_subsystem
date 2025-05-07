@@ -8,13 +8,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.vgb.Company;
 import com.vgb.Contract;
 import com.vgb.Equipment;
 import com.vgb.EquipmentLease;
@@ -22,6 +19,9 @@ import com.vgb.EquipmentRental;
 import com.vgb.Item;
 import com.vgb.Material;
 
+/** 
+ * A class that populates invoice items, that is items that are on invoices and have data in the InvoiceItem table of the database.
+ */
 public class InvoiceItemFactory {
     private static final Logger logger = LogManager.getLogger(InvoiceItemFactory.class);
 
@@ -81,8 +81,8 @@ public class InvoiceItemFactory {
 					item = new Contract((Contract) baseItem, amount);
 				// else the item is not a valid subclass.
 				} else {
-					logger.error("Item with itemId: " + itemId + " is not an Equipment, Material, or Contract.");
-					throw new IllegalStateException("Item with itemId: " + itemId + " is not an Equipment, Material, or Contract.");
+					logger.error("Item with itemId: " + itemId + " is not an Equipment, Material, or Contract. Item class: \"" + baseItem.getClass() + "\".");
+					throw new IllegalStateException("Item with itemId: " + itemId + " is not an Equipment, Material, or Contract. Item class: \"" + baseItem.getClass() + "\".");
 				}
 			} else {
 				logger.error("Invoice item with itemId: " + itemId + " not found in the database.");
@@ -101,34 +101,7 @@ public class InvoiceItemFactory {
 	}
 	
 	/**
-	 * Returns the itemId (if it exists) of the item with the specified UUID.
-	 * 
-	 * @param connection The connection to the database.
-	 * @param uuid The UUID of the desired item. 
-	 */
-	public static Optional<Integer> getId(Connection connection, UUID uuid) {
-		Optional<Integer> itemId = Optional.empty();
-		String query = 
-			"select temId from InvoiceItem where uuid = ?;";
-		
-		try (PreparedStatement statement = connection.prepareStatement(query)) {
-			statement.setString(1, uuid.toString());
-			ResultSet results = statement.executeQuery();
-			if (results.next()) {
-				itemId = Optional.of(results.getInt("itemId"));
-			} else {
-				logger.warn("Invoice item with UUID: \"" + uuid + "\" not found in the database.");
-			}
-		} catch (SQLException e) {
-			logger.error("SQLException encountered while getting itemId for Item with UUID: \"" + uuid + "\" from the database.");
-			throw new RuntimeException(e);
-		} 
-			
-		return itemId;
-	}
-	
-	/**
-	 * Loads all of the Item objects from the database.
+	 * Loads all of the invoice item objects from the database.
 	 * 
 	 * @param connection The connection to the database.
 	 */
