@@ -1,48 +1,98 @@
-<?xml version="1.0" encoding="UTF-8" ?>
- <root>
-     <0>
-         <companyUuid>4c141f07-3e8c-4d77-abc4-3e2058fb7e30</companyUuid>
-         <contactUuid>c4147f3a-029c-4c8e-8710-3b29a02019d3</contactUuid>
-         <name>Company A</name>
-         <street>1111 A Street</street>
-         <city>A City</city>
-         <state>NE</state>
-         <zip>68848</zip>
-     </0>
-     <1>
-         <companyUuid>b6677ab8-f204-41ec-a297-406b89dd56b6</companyUuid>
-         <contactUuid>17a2a995-6555-46e2-8630-bfd3d8765d78</contactUuid>
-         <name>Company B</name>
-         <street>2222 B Ave</street>
-         <city>B City</city>
-         <state>VE</state>
-         <zip>77889</zip>
-     </1>
-     <2>
-         <companyUuid>85f7ab31-8118-4100-8d08-2e154da6e734</companyUuid>
-         <contactUuid>365ecbd2-ed99-4cd6-8d63-d9da8c9caa89</contactUuid>
-         <name>Company C</name>
-         <street>3333 C Lane</street>
-         <city>C City</city>
-         <state>WI</state>
-         <zip>12345</zip>
-     </2>
-     <3>
-         <companyUuid>aeb3835b-e365-46f1-84cc-a7dffb67bb86</companyUuid>
-         <contactUuid>ef1e65c3-38c4-49ba-b25d-d6696e1918b4</contactUuid>
-         <name>Company D</name>
-         <street>4444 D Trail</street>
-         <city>D City</city>
-         <state>CA</state>
-         <zip>99900</zip>
-     </3>
-     <4>
-         <companyUuid>dc94e6f3-ef25-4ca9-8c42-50a72170d51b</companyUuid>
-         <contactUuid>ee444afd-39d1-4ed6-b611-7f5a8db842f8</contactUuid>
-         <name>Company E</name>
-         <street>5555 E Boulevard</street>
-         <city>E City</city>
-         <state>TX</state>
-         <zip>9876</zip>
-     </4>
- </root>
+<list>
+  <company>
+    <uuid>b6677ab8-f204-41ec-a297-406b89dd56b6</uuid>
+    <contact>
+      <uuid>17a2a995-6555-46e2-8630-bfd3d8765d78</uuid>
+      <firstName>Eminem</firstName>
+      <lastName>Boseman</lastName>
+      <phoneNumber>222-222-2222</phoneNumber>
+      <emailAddresses>
+        <string>eminemnottherapper@gmail.com</string>
+      </emailAddresses>
+    </contact>
+    <name>Company B</name>
+    <address>
+      <street>2222 B Ave</street>
+      <city>B City</city>
+      <state>VE</state>
+      <zip>77889</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>85f7ab31-8118-4100-8d08-2e154da6e734</uuid>
+    <contact>
+      <uuid>365ecbd2-ed99-4cd6-8d63-d9da8c9caa89</uuid>
+      <firstName>Michael</firstName>
+      <lastName>Starburst</lastName>
+      <phoneNumber>333-333-3333</phoneNumber>
+      <emailAddresses>
+        <string>michael33@aol.com</string>
+        <string>michael33clone@aol.com</string>
+      </emailAddresses>
+    </contact>
+    <name>Company C</name>
+    <address>
+      <street>3333 C Lane</street>
+      <city>C City</city>
+      <state>WI</state>
+      <zip>12345</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>dc94e6f3-ef25-4ca9-8c42-50a72170d51b</uuid>
+    <contact>
+      <uuid>ee444afd-39d1-4ed6-b611-7f5a8db842f8</uuid>
+      <firstName>Oscar</firstName>
+      <lastName>Hanson</lastName>
+      <phoneNumber>555-555-5555</phoneNumber>
+      <emailAddresses>
+        <string>ohanson5@huskers.unl.edu</string>
+      </emailAddresses>
+    </contact>
+    <name>Company E</name>
+    <address>
+      <street>5555 E Boulevard</street>
+      <city>E City</city>
+      <state>TX</state>
+      <zip>09876</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>aeb3835b-e365-46f1-84cc-a7dffb67bb86</uuid>
+    <contact>
+      <uuid>ef1e65c3-38c4-49ba-b25d-d6696e1918b4</uuid>
+      <firstName>Ermias</firstName>
+      <lastName>Wolde</lastName>
+      <phoneNumber>444-444-4444</phoneNumber>
+      <emailAddresses>
+        <string>ewolde2@huskers.unl.edu</string>
+      </emailAddresses>
+    </contact>
+    <name>Company D</name>
+    <address>
+      <street>4444 D Trail</street>
+      <city>D City</city>
+      <state>CA</state>
+      <zip>99900</zip>
+    </address>
+  </company>
+  <company>
+    <uuid>4c141f07-3e8c-4d77-abc4-3e2058fb7e30</uuid>
+    <contact>
+      <uuid>c4147f3a-029c-4c8e-8710-3b29a02019d3</uuid>
+      <firstName>Josh</firstName>
+      <lastName>Terminator</lastName>
+      <phoneNumber>111-111-1111</phoneNumber>
+      <emailAddresses>
+        <string>joshtheterminator@yahoo.com</string>
+      </emailAddresses>
+    </contact>
+    <name>Company A</name>
+    <address>
+      <street>1111 A Street</street>
+      <city>A City</city>
+      <state>NE</state>
+      <zip>68848</zip>
+    </address>
+  </company>
+</list>

@@ -10,6 +10,7 @@ import java.util.Map;
 import com.vgb.database_factories.CompanyFactory;
 import com.vgb.database_factories.ConnectionFactory;
 import com.vgb.database_factories.InvoiceFactory;
+import com.vgb.lists.SortedList;
 
 /**
  * Generates and prints various types of reports for the invoicing subsystem.
@@ -19,13 +20,47 @@ public class InvoiceReport {
 	 * Prints reports about the invoicing subsystem.
 	 */
 	public static void main(String[] args) {
-		Connection connection = ConnectionFactory.getConnection();		
+		Connection connection = ConnectionFactory.getConnection();	
+		
 		List<Invoice> invoices = InvoiceFactory.loadAllInvoices(connection);
 		List<Company> companies = CompanyFactory.loadAllCompanies(connection);
-		System.out.println(customersSummary(companies, invoices) + "\n\n");
-		System.out.println(invoicesSummary(invoices) + "\n\n");
-		System.out.println(detailedInvoicesSummary(invoices) + "\n\n");
+		
+		SortedList<Invoice> invoicesSortedByTotal = new SortedList<>(new InvoiceTotalDescending(), invoices);
+		SortedList<Invoice> invoicesSortedAlphabetically= new SortedList<>(new InvoiceCustomerNameAlphabetical(), invoices);
+		SortedList<Company> customersSortedByInvoiceTotal = new SortedList<>(new CompanyInvoiceTotalAscending(invoices), companies);
+		
+		System.out.println("Invoice Report | By Total");
+		System.out.println(invoicesSummary(invoicesSortedByTotal) + "\n\n");
+		System.out.println("Invoice Report | By Name");
+		System.out.println(invoicesSummary(invoicesSortedAlphabetically) + "\n\n");
+		System.out.println("Customer Report | By Invoice Total");
+		System.out.println(customersSummary(customersSortedByInvoiceTotal, invoices) + "\n\n");
+
 		ConnectionFactory.closeConnection();
+	}
+	
+	/**
+	 * Generates and returns a summary report of all invoices in the invoicing subsystem.
+	 * 
+	 * @param invoices The list of invoices the report should cover.
+	 */
+	public static String invoicesSummary(SortedList<Invoice> invoices) {
+		Total total = Total.empty();
+		int totalAmountOfItems = 0;
+		StringBuilder invoicesSB = new StringBuilder();
+		
+		for (Invoice invoice : invoices) {
+			invoicesSB.append(invoice.summary());
+			total.add(invoice.getTotal());
+			totalAmountOfItems += invoice.getItems().size();
+		}
+		
+		invoicesSB.append("Total Number of Items: " + totalAmountOfItems + "\n");
+        invoicesSB.append("Subtotal: $" + String.format("%.2f", total.getCost()) + "\n");
+        invoicesSB.append("Tax Total: $" + String.format("%.2f", total.getTax()) + "\n");
+        invoicesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
+	
+		return invoicesSB.toString();
 	}
 
 	/**
@@ -33,7 +68,7 @@ public class InvoiceReport {
 	 * 
 	 * @param invoices The list of invoices the report should cover.
 	 */
-	public static String customersSummary(List<Company> customers, List<Invoice> invoices) {
+	public static String customersSummary(SortedList<Company> customers, List<Invoice> invoices) {
 		Total total = Total.empty();
 		int totalAmountOfInvoices = 0;
 				
@@ -42,7 +77,6 @@ public class InvoiceReport {
 		for (Company customer : customers) {
 			customersAndInvoices.put(customer.getName(), new ArrayList<Invoice>());
 		}
-		
 		
 		for (Invoice invoice : invoices) {
 			List<Invoice> customerInvoices = customersAndInvoices.get(invoice.getCustomer().getName());
@@ -54,10 +88,7 @@ public class InvoiceReport {
 		}
 				
 		StringBuilder companiesSB = new StringBuilder();
-		companiesSB.append("Company Invoice Summary Report\n\n");
-		
-		customers.sort(Comparator.comparing(Company::getName));
-		
+				
 		for (Company customer : customers) {
 			List<Invoice> customerInvoices = customersAndInvoices.get(customer.getName());
 			int amountOfInvoices = customerInvoices.size();
@@ -84,16 +115,11 @@ public class InvoiceReport {
 	 * 
 	 * @param invoices The list of invoices the report should cover.
 	 */
-	public static String detailedInvoicesSummary(List<Invoice> invoices) {
-		invoices.sort(Comparator.comparing(Invoice::getTotalValue).reversed());
-		
+	public static String detailedInvoicesSummary(SortedList<Invoice> invoices) {		
 		Total total = Total.empty();
 		int totalAmountOfItems = 0;
 		StringBuilder invoicesSB = new StringBuilder();
-		invoicesSB.append("Summary Report | By Total\n\n");
-		
-		invoicesSB.append("Detailed Summary Report \n\n");
-		
+				
         for (Invoice invoice : invoices) {
         	invoicesSB.append(invoice);
         	invoicesSB.append("\n");
@@ -110,29 +136,80 @@ public class InvoiceReport {
     }
 	
 	/**
-	 * Generates and returns a summary report of all invoices in the invoicing subsystem.
-	 * 
-	 * @param invoices The list of invoices the report should cover.
+	 * A comparator that orders invoices by their total value (i.e. the sum of all of their items).
 	 */
-	public static String invoicesSummary(List<Invoice> invoices) {
-		invoices.sort(Comparator.comparing(Invoice::getTotalValue).reversed());
-
-		Total total = Total.empty();
-		int totalAmountOfItems = 0;
-		StringBuilder invoicesSB = new StringBuilder();
-		invoicesSB.append("Summary Report | By Total\n\n");
-		
-		for (Invoice invoice : invoices) {
-			invoicesSB.append(invoice.summary());
-			total.add(invoice.getTotal());
-			totalAmountOfItems += invoice.getItems().size();
-		}
-		
-		invoicesSB.append("Total Number of Items: " + totalAmountOfItems + "\n");
-        invoicesSB.append("Subtotal: $" + String.format("%.2f", total.getCost()) + "\n");
-        invoicesSB.append("Tax Total: $" + String.format("%.2f", total.getTax()) + "\n");
-        invoicesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
+	private static class InvoiceTotalDescending implements Comparator<Invoice> {
+	    @Override
+	    public int compare(Invoice i1, Invoice i2) {
+	        int comparisonValue = Double.compare(
+	        	i2.getTotalValue(), 
+	        	i1.getTotalValue()
+	        );
+			
+			if (comparisonValue == 0) {
+				return i1.getUuid().compareTo(i2.getUuid());
+			}
+			
+			return comparisonValue;
+	    }
+	}
 	
-		return invoicesSB.toString();
+	/**
+	 * A comparator that orders invoices alphabetically by the name of their customer.
+	 */
+	private static class InvoiceCustomerNameAlphabetical implements Comparator<Invoice> {
+	    @Override
+	    public int compare(Invoice i1, Invoice i2) {
+	        int comparisonValue = i1.getCustomer().getName().compareTo(i2.getCustomer().getName());
+				
+			if (comparisonValue == 0) {
+				return i2.getUuid().compareTo(i1.getUuid());
+			}
+			
+			return comparisonValue;
+	    }
+	}
+	
+	/**
+	 * A comparator that orders companies by the total of all of their invoices.
+	 */
+	private static class CompanyInvoiceTotalAscending implements Comparator<Company> {
+		/**
+		 * Contains all of the invoice totals for each company.
+		 */
+	    private final Map<String, Double> companyToTotal;
+
+	    /**
+	     * Creates and populates a comparator to compare companies by the total of their invoices. 
+	     * 
+	     * @param invoices The invoices to populate the comparator with. 
+	     */
+		public CompanyInvoiceTotalAscending(List<Invoice> invoices) {
+			companyToTotal = new HashMap<>();
+			
+			for (Invoice invoice : invoices) {
+				Company customer = invoice.getCustomer();
+				double total = invoice.getTotalValue();
+				if (!companyToTotal.containsKey(customer.getName())) {
+					companyToTotal.put(customer.getName(), total);
+				} else {
+					companyToTotal.put(customer.getName(), companyToTotal.get(customer.getName()) + total);
+				}
+			}
+		}
+
+		@Override
+		public int compare(Company c1, Company c2) {
+			int comparisonValue = Double.compare(
+				companyToTotal.getOrDefault(c1.getName(), 0.0), 
+				companyToTotal.getOrDefault(c2.getName(), 0.0)
+			);
+			
+			if (comparisonValue == 0) {
+				return c1.getUuid().compareTo(c2.getUuid());
+			}
+			
+			return comparisonValue;
+		}
 	}
 }

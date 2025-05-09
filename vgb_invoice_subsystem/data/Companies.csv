@@ -1,11 +1,6 @@
 companyUuid,contactUuid,name,street,city,state,zip
-9fde1bac-a7ae-4f0e-8438-beae0f0ac4f2,8fc4fb17-a48f-4ac8-8282-c663c7eb434c,Central Intelligence Agency,Cypress Court,San Francisco,CA,91131
-39e2caee-474f-41f0-83ea-1ffaee07f485,29b00093-8ba8-4e94-b45a-14fc037a469f,BonBon Family Enterprises,Columbia Street,Omaha,NE,60616
-8e186611-ce1d-4192-b452-2095ed3c65ab,d2f1d01f-c58e-40f1-b67c-78fdd3b25bff,Wayne Enterprises,Cypress Drive,Chicago,IL,20566
-7a8eee4d-0e28-40a8-a4a6-dbcc41280866,3b28980b-f92d-494d-a06b-9e20339502f3,United States Department of Agriculture,Edgewood Road,North Platte,NE,98148
-5bca0202-4db1-45d2-9db4-8d564a529f13,6b48bda2-ef58-4660-8a8a-4ea0d7fa0397,Mitchell LLC,Cobblestone Court,Chicago,IL,68508
-1d34990f-8753-4c7f-a987-a9fb19cc4e54,1292e299-c9b7-4a7d-932d-20a7a15eb6b7,National Goat Racing Administration,Country Club Drive,Boston,MA,19136
-2c2d5dd3-3e31-457c-a899-cb5dd2cd9a3b,13b740e8-1b5e-4722-be16-acc64e5f1aff,Weissnat and Okuneva,Durham Road,Hastings,NE,20566
-4e980377-6242-4778-82bf-44d40e59d9c2,1292e299-c9b7-4a7d-932d-20a7a15eb6b7,Enron,Cypress Court,Lincoln,NE,98148
-ddd26d0d-6fea-460c-96b2-3cbbb196a863,48ddf481-38c4-4a4c-b773-0621e8234f0d,Stark Industries,Country Lane,Lincoln,NE,98148
-135fde08-449e-4813-ab9d-6b6e9300b69e,6a651f03-b6d7-470f-ad5a-7af6e8fe95f8,Central Intelligence Agency,College Street,Scottsbluff,NE,68508
+4c141f07-3e8c-4d77-abc4-3e2058fb7e30,c4147f3a-029c-4c8e-8710-3b29a02019d3,Company A,1111 A Street,A City,NE,68848
+b6677ab8-f204-41ec-a297-406b89dd56b6,17a2a995-6555-46e2-8630-bfd3d8765d78,Company B,2222 B Ave,B City,VE,77889
+85f7ab31-8118-4100-8d08-2e154da6e734,365ecbd2-ed99-4cd6-8d63-d9da8c9caa89,Company C,3333 C Lane,C City,WI,12345
+aeb3835b-e365-46f1-84cc-a7dffb67bb86,ef1e65c3-38c4-49ba-b25d-d6696e1918b4,Company D,4444 D Trail,D City,CA,99900
+dc94e6f3-ef25-4ca9-8c42-50a72170d51b,ee444afd-39d1-4ed6-b611-7f5a8db842f8,Company E,5555 E Boulevard,E City,TX,09876

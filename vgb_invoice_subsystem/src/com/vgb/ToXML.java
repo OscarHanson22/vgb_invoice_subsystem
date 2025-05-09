@@ -12,7 +12,6 @@ public class ToXML {
 		configured_xstream.alias("person", Person.class);
 		configured_xstream.alias("company", Company.class);
 		configured_xstream.alias("address", Address.class);
-		configured_xstream.alias("item", Item.class);
 		configured_xstream.alias("material", Material.class);
 		configured_xstream.alias("equipment", Equipment.class);
 		configured_xstream.alias("contract", Contract.class);

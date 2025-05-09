@@ -1,38 +1,48 @@
 [
- {
-   "uuid": "c4147f3a-029c-4c8e-8710-3b29a02019d3",
-   "firstName": "Josh",
-   "lastName": "Terminator",
-   "phone": "111-111-1111",
-   "email(s)": ["joshtheterminator@yahoo.com"],
- },
- {
-   "uuid": "17a2a995-6555-46e2-8630-bfd3d8765d78",
-   "firstName": "Eminem",
-   "lastName": "Boseman",
-   "phone": "222-222-2222",
-   "email(s)": ["eminemnottherapper@gmail.com"],
- },
- {
-   "uuid": "365ecbd2-ed99-4cd6-8d63-d9da8c9caa89",
-   "firstName": "Michael",
-   "lastName": "Starburst",
-   "phone": "333-333-3333",
-   "email(s)": ["michael33@aol.com", "michael33clone@aol.com"],
-
- },
- {
-   "uuid": "ef1e65c3-38c4-49ba-b25d-d6696e1918b4",
-   "firstName": "Ermias",
-   "lastName": "Wolde",
-   "phone": "444-444-4444",
-   "email(s)": ["ewolde2@huskers.unl.edu"],
- },
- {
-   "uuid": "ee444afd-39d1-4ed6-b611-7f5a8db842f8",
-   "firstName": "Oscar",
-   "lastName": "Hanson",
-   "phone": "555-555-5555",
-   "email(s)": ["ohanson5@huskers.unl.edu"],
- }
+  {
+    "firstName": "Ermias",
+    "lastName": "Wolde",
+    "phoneNumber": "444-444-4444",
+    "emailAddresses": [
+      "ewolde2@huskers.unl.edu"
+    ],
+    "uuid": "ef1e65c3-38c4-49ba-b25d-d6696e1918b4"
+  },
+  {
+    "firstName": "Oscar",
+    "lastName": "Hanson",
+    "phoneNumber": "555-555-5555",
+    "emailAddresses": [
+      "ohanson5@huskers.unl.edu"
+    ],
+    "uuid": "ee444afd-39d1-4ed6-b611-7f5a8db842f8"
+  },
+  {
+    "firstName": "Eminem",
+    "lastName": "Boseman",
+    "phoneNumber": "222-222-2222",
+    "emailAddresses": [
+      "eminemnottherapper@gmail.com"
+    ],
+    "uuid": "17a2a995-6555-46e2-8630-bfd3d8765d78"
+  },
+  {
+    "firstName": "Josh",
+    "lastName": "Terminator",
+    "phoneNumber": "111-111-1111",
+    "emailAddresses": [
+      "joshtheterminator@yahoo.com"
+    ],
+    "uuid": "c4147f3a-029c-4c8e-8710-3b29a02019d3"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Starburst",
+    "phoneNumber": "333-333-3333",
+    "emailAddresses": [
+      "michael33@aol.com",
+      "michael33clone@aol.com"
+    ],
+    "uuid": "365ecbd2-ed99-4cd6-8d63-d9da8c9caa89"
+  }
 ]
