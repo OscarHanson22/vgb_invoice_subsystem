@@ -1,9 +1,9 @@
-2025-05-09 15:22:41.318 [main] INFO  com.vgb.database_factories.ConnectionFactory - Successfully connected to the database.
-2025-05-09 15:22:41.654 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.665 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.697 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.745 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.764 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.813 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:41.967 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 962.
-2025-05-09 15:22:42.065 [main] INFO  com.vgb.database_factories.ConnectionFactory - Connection to database successfully closed.
+2025-05-09 22:25:31.028 [main] INFO  com.vgb.database_factories.ConnectionFactory - Successfully connected to the database.
+2025-05-09 22:25:31.741 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:31.778 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:31.843 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:31.960 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:32.006 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:32.118 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:32.503 [main] WARN  com.vgb.database_factories.EmailFactory - No emails registered for person with personId: 1042.
+2025-05-09 22:25:32.645 [main] INFO  com.vgb.database_factories.ConnectionFactory - Connection to database successfully closed.

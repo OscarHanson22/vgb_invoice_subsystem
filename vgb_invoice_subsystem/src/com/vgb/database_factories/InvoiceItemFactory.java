@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Class that reads invoice items (fully populated items) from the database.
+ */
+
 package com.vgb.database_factories;
 
 import java.sql.Connection;

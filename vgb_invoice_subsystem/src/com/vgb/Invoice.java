@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Object that represents an invoice in the subsystem.
+ */
+
 package com.vgb;
 
 import java.time.LocalDate;
@@ -70,18 +76,15 @@ public class Invoice extends Identifiable {
 		return total.getTotal();
 	}
 	
+	public static String summaryHeader() {
+		return String.format("%-36s | %-30s | %-20s\n", "UUID", "Customer", "Total");
+	}
+	
 	/**
 	 * Returns a summary of the invoice.
 	 */
 	public String summary() {
-		StringBuilder invoiceSB = new StringBuilder();
-		invoiceSB.append("Invoice UUID: " + getUuid() + "\n");
-		invoiceSB.append("Date: " + date + "\n");
-		invoiceSB.append("Customer: " + customer.getName() + "\n");
-		invoiceSB.append("Sold by: " + salesperson.getFullName() + "\n");
-		invoiceSB.append("Number of Items: " + items.size() + "\n");
-		invoiceSB.append(total + "\n\n");
-		return invoiceSB.toString();
+		return String.format("%-36s | %-30s | $%-20.2f\n", getUuid(), customer.getName(), getTotalValue());
 	}
 
 	@Override

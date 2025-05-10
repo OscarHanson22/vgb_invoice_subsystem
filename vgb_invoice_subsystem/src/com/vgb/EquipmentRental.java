@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Object representation of the renting of a piece of equipment.
+ */
+
 package com.vgb;
 
 public class EquipmentRental extends Equipment {

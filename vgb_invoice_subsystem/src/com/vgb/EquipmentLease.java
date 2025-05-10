@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Object representation of the leasing of a piece of equipment.
+ */
+
 package com.vgb;
 
 import java.time.LocalDate;

@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Class that reads and writes from files to parse objects in the subsystem. 
+ */
+
 package com.vgb;
 
 import java.nio.file.Files;
@@ -9,9 +15,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-// A file-system interface that provides methods for writing to and from files. 
+/**
+ * A file-system interface that provides methods for writing to and from files. 
+ */
 public abstract class Parser {
-	// Reads the contents of `fileName` into a string and returns it. 
+	/**
+	 * Reads the contents of `fileName` into a string and returns it. 
+	 * 
+	 * @param fileName
+	 * @return
+	 */
 	public static String readFileToString(String fileName) {
 		String data = "";
 
@@ -25,7 +38,13 @@ public abstract class Parser {
 		return data;
 	}
 	
-	// Splits a string up into lines (\n, \n\r, \r\n, \r etc.)
+	/**
+	 * Splits a string up into lines (\n, \n\r, \r\n, \r etc.)
+	 * 
+	 * @param string
+	 * @param skip
+	 * @return
+	 */
 	public static List<String> linesOf(String string, int skip) {
 		ArrayList<String> lines = new ArrayList<>();
 		
@@ -38,7 +57,12 @@ public abstract class Parser {
 		return lines;
 	}
 	
-	// Writes `string` to the file at `fileName`.
+	/**
+	 * Writes `string` to the file at `fileName`.
+	 * 
+	 * @param string
+	 * @param fileName
+	 */
 	public static void writeStringToFile(String string, String fileName) {
 		try {
 			Files.write(Paths.get(fileName), string.getBytes());
@@ -48,8 +72,13 @@ public abstract class Parser {
 		}
 	}
 	
-	// Parses a list of Person objects from a given file `fromFile`. 
-	// `fromFile` is expected to be a .csv file that is properly formatted.
+	/**
+	 * Parses a list of Person objects from a given file `fromFile`. 
+	 * `fromFile` is expected to be a .csv file that is properly formatted.
+	 * 
+	 * @param fromFile
+	 * @return
+	 */
 	public static HashMap<UUID, Person> parsePeople(String fromFile) {
 		String personsCsvString = readFileToString(fromFile);
 						
@@ -72,8 +101,14 @@ public abstract class Parser {
 		return persons;
 	}
 	
-	// Parses a list of Company objects from a given file `fromFile`. 
-	// `fromFile` is expected to be a .csv file that is properly formatted.
+	/**
+	 * Parses a list of Company objects from a given file `fromFile` and person objects. 
+	 * `fromFile` is expected to be a .csv file that is properly formatted.
+	 * 
+	 * @param fromFile
+	 * @param withPeople
+	 * @return
+	 */
 	public static HashMap<UUID, Company> parseCompanies(String fromFile, HashMap<UUID, Person> withPeople) {
 		String companiesCsvString = readFileToString(fromFile);
 						
@@ -105,8 +140,14 @@ public abstract class Parser {
 		return companies;
 	}
 	
-	// Parses a list of Item objects from a given file `fromFile`. 
-	// `fromFile` is expected to be a .csv file that is properly formatted.
+	/**
+	 * Parses a list of Item objects from a given file `fromFile` and company objects. 
+	 * `fromFile` is expected to be a .csv file that is properly formatted.
+	 * 
+	 * @param fromFile
+	 * @param withCompanies
+	 * @return
+	 */
 	public static HashMap<UUID, Item> parseItems(String fromFile, HashMap<UUID, Company> withCompanies) {
 		String itemsCsvString = readFileToString(fromFile);
 						
@@ -148,6 +189,14 @@ public abstract class Parser {
 		return items;
 	}
 	
+	/**
+	 * Parses a list of Invoice objects from a given file `fromFile`, person objects, and company objects. 
+	 * `fromFile` is expected to be a .csv file that is properly formatted.
+	 * 
+	 * @param fromFile
+	 * @param withCompanies
+	 * @return
+	 */
 	public static HashMap<UUID, Invoice> parseInvoices(String fromFile, HashMap<UUID, Person> withPeople, HashMap<UUID, Company> withCompanies) {
 		String InvoicesCsvString = readFileToString(fromFile);
 				
@@ -181,6 +230,15 @@ public abstract class Parser {
 		return invoices;
 	}
 	
+	/**
+	 * Parses a list of populated Invoice objects from a given file `fromFile`, invoices to populate, and items to populate with. 
+	 * `fromFile` is expected to be a .csv file that is properly formatted.
+	 * 
+	 * @param fromFile
+	 * @param addToInvoices
+	 * @param withItems
+	 * @return
+	 */
 	public static List<Invoice> parseInvoiceItems(String fromFile, HashMap<UUID, Invoice> addToInvoices, HashMap<UUID, Item> withItems) {
 		String invoiceItemsCsvString = readFileToString(fromFile);
 						

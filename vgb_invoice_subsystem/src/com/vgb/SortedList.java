@@ -1,4 +1,10 @@
-package com.vgb.lists;
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: List data structure that is always sorted.
+ */
+
+package com.vgb;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -65,22 +71,43 @@ public class SortedList<T> implements Iterable<T> {
 	 * @param element The element to add.
 	 * @throws IllegalArgumentException When element is null.
 	 */
-	public void add(T element) {		
+	public void add(T element) {
 		if (element == null) {
 			throw new IllegalArgumentException("Cannot add a null element to the sorted list.");
 		}
 		
-		int index = 0;
+		LinkedListNode<T> nodeToInsert = new LinkedListNode<T>(element);
 		
-		for (T e : this) {
-			if (comparator.compare(element, e) < 0) {
-				insert(element, index);
-				return;
-			}
-			index++;
+		if (head == null) {
+			head = nodeToInsert;
+			size++;
+			return;
 		}
 		
-		insert(element, index);
+		LinkedListNode<T> previous = null;
+		LinkedListNode<T> current = head;
+		boolean firstIteration = true;
+				
+		while (current != null) {
+			if (comparator.compare(element, current.getData()) < 0) {
+				nodeToInsert.setNext(current);
+				if (firstIteration) {
+					head = nodeToInsert;
+				}
+				if (previous != null) {
+					previous.setNext(nodeToInsert);
+				}
+				size++;
+				return;
+			}
+			
+			previous = current;
+			current = current.getNext();
+			firstIteration = false;
+		}
+		
+		previous.setNext(nodeToInsert);
+		size++;
 	}
 	
 	/**
@@ -190,18 +217,10 @@ public class SortedList<T> implements Iterable<T> {
 		}
 		
 		if (atIndex == 0) {
-			if (head == null) {
-				head = nodeToInsert;
-			} else {
-				nodeToInsert.setNext(head);
-				head = nodeToInsert;
-			}
+			nodeToInsert.setNext(head);
+			head = nodeToInsert;
 			size++;
 			return true;
-		}
-		
-		if (head == null) {
-			return false;
 		}
 				
 		LinkedListNode<T> previous = head;

@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Unit tests for reading and writing to the database.
+ */
+
 package com.vgb.database_factories;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

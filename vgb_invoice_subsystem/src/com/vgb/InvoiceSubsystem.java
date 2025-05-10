@@ -1,3 +1,10 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Class that gathers together all of the subsystem elements to assist in reporting.
+ * Note: Only for reading from files, no database interface.
+ */
+
 package com.vgb;
 
 import java.util.HashMap;

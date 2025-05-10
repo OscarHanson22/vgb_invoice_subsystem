@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Unit tests that ensure invoices hold the necessary information. 
+ */
+
 package com.vgb;
 
 import static org.junit.Assert.assertTrue;

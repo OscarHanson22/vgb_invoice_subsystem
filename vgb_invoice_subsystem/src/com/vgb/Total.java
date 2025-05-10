@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Object that holds the cost, tax, and total of something that can be assigned a price.
+ */
+
 package com.vgb;
 
 public class Total {

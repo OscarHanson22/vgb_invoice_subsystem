@@ -1,4 +1,11 @@
-package com.vgb;
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Handles the logic of adding an address to the database.
+ * 
+ */
+
+package com.vgb.database_factories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

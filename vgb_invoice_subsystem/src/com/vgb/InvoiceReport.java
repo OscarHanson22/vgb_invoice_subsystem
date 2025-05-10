@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Generates reports for objects in the subsystem.
+ */
+
 package com.vgb;
 
 import java.sql.Connection;
@@ -10,7 +16,6 @@ import java.util.Map;
 import com.vgb.database_factories.CompanyFactory;
 import com.vgb.database_factories.ConnectionFactory;
 import com.vgb.database_factories.InvoiceFactory;
-import com.vgb.lists.SortedList;
 
 /**
  * Generates and prints various types of reports for the invoicing subsystem.
@@ -29,13 +34,18 @@ public class InvoiceReport {
 		SortedList<Invoice> invoicesSortedAlphabetically= new SortedList<>(new InvoiceCustomerNameAlphabetical(), invoices);
 		SortedList<Company> customersSortedByInvoiceTotal = new SortedList<>(new CompanyInvoiceTotalAscending(invoices), companies);
 		
-		System.out.println("Invoice Report | By Total");
+		System.out.println("\nInvoices by Total");
+		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println(invoicesSummary(invoicesSortedByTotal) + "\n\n");
-		System.out.println("Invoice Report | By Name");
+		
+		System.out.println("Invoices by Customer");
+		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println(invoicesSummary(invoicesSortedAlphabetically) + "\n\n");
-		System.out.println("Customer Report | By Invoice Total");
+		
+		System.out.println("Customer Invoice Totals");
+		System.out.println("--------------------------------------------------------------------------------");
 		System.out.println(customersSummary(customersSortedByInvoiceTotal, invoices) + "\n\n");
-
+		
 		ConnectionFactory.closeConnection();
 	}
 	
@@ -45,20 +55,13 @@ public class InvoiceReport {
 	 * @param invoices The list of invoices the report should cover.
 	 */
 	public static String invoicesSummary(SortedList<Invoice> invoices) {
-		Total total = Total.empty();
-		int totalAmountOfItems = 0;
 		StringBuilder invoicesSB = new StringBuilder();
+		
+		invoicesSB.append(Invoice.summaryHeader());
 		
 		for (Invoice invoice : invoices) {
 			invoicesSB.append(invoice.summary());
-			total.add(invoice.getTotal());
-			totalAmountOfItems += invoice.getItems().size();
 		}
-		
-		invoicesSB.append("Total Number of Items: " + totalAmountOfItems + "\n");
-        invoicesSB.append("Subtotal: $" + String.format("%.2f", total.getCost()) + "\n");
-        invoicesSB.append("Tax Total: $" + String.format("%.2f", total.getTax()) + "\n");
-        invoicesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
 	
 		return invoicesSB.toString();
 	}
@@ -68,10 +71,7 @@ public class InvoiceReport {
 	 * 
 	 * @param invoices The list of invoices the report should cover.
 	 */
-	public static String customersSummary(SortedList<Company> customers, List<Invoice> invoices) {
-		Total total = Total.empty();
-		int totalAmountOfInvoices = 0;
-				
+	public static String customersSummary(SortedList<Company> customers, List<Invoice> invoices) {				
 		Map<String, List<Invoice>> customersAndInvoices = new HashMap<>();
 		
 		for (Company customer : customers) {
@@ -88,6 +88,7 @@ public class InvoiceReport {
 		}
 				
 		StringBuilder companiesSB = new StringBuilder();
+		companiesSB.append(String.format("%-36s | %-20s | %-20s\n", "Customer", "Number of Invoices", "Total"));
 				
 		for (Company customer : customers) {
 			List<Invoice> customerInvoices = customersAndInvoices.get(customer.getName());
@@ -96,17 +97,10 @@ public class InvoiceReport {
 			for (Invoice invoice : customerInvoices) {
 				customerTotal.add(invoice.getTotal());
 			}
-			total.add(customerTotal);
-			totalAmountOfInvoices += amountOfInvoices;
 			
-			companiesSB.append("Customer: " + customer.getName() + "\n");
-			companiesSB.append("Amount of Invoices: " + amountOfInvoices + "\n");
-			companiesSB.append(customerTotal + "\n\n");
+			companiesSB.append(String.format("%-36s | %-20s | $%-20.2f\n", customer.getName(), amountOfInvoices, customerTotal.getTotal()));
 		}
-	    
-		companiesSB.append("Total Number of Invoices: " + totalAmountOfInvoices + "\n");
-	    companiesSB.append("Grand Total: $" + String.format("%.2f", total.getTotal()) + "\n");
-	    
+	    	    
 		return companiesSB.toString();
     }
     

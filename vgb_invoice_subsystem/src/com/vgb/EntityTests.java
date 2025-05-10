@@ -1,3 +1,10 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Provides tests for item subclasses.
+ * 
+ */
+
 package com.vgb;
 
 import static org.junit.Assert.assertTrue;

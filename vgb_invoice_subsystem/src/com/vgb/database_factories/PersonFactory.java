@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Class that reads Person objects from the database.
+ */
+
 package com.vgb.database_factories;
 
 import java.sql.Connection;
@@ -13,7 +19,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.vgb.Person;
-import com.vgb.Result;
 
 /**
  * A class that loads Person objects and related information from the Person table in the database.

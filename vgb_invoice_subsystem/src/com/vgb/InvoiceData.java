@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.vgb.database_factories.AddressAdder;
 import com.vgb.database_factories.CompanyFactory;
 import com.vgb.database_factories.ConnectionFactory;
 import com.vgb.database_factories.InvoiceFactory;

@@ -1,4 +1,10 @@
-package com.vgb.lists;
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Unit tests that ensure that the sorted list is always sorted, even during many different operations. 
+ */
+
+package com.vgb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -17,7 +23,7 @@ public class SortedListTests {
 	private <T> boolean isSorted(SortedList<T> list, Comparator<T> comp) {
 		T previous = null;
 		
-		for (T element : list) {			
+		for (T element : list) {	
 			if (previous != null && comp.compare(element, previous) < 0) {
 				return false;
 			}
@@ -67,7 +73,7 @@ public class SortedListTests {
 		list.add(100);
 		list.add(-2);
 		list.add(50);
-		
+				
 		assertEquals(list.get(0), -2);
 		assertEquals(list.get(9), 10000);
 	

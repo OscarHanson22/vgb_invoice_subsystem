@@ -1,3 +1,9 @@
+/**
+ * Authors: Oscar Hanson and Ermias Wolde
+ * Date: 5/9/2025
+ * Purpose: Class that handles the logic for connecting to the database.
+ */
+
 package com.vgb.database_factories;
 
 import java.sql.Connection;
